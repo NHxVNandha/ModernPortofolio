@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kurnia Hary | Portfolio</title>
+<!-- React and Babel CDN -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#c2c6d6",
+                        "on-tertiary-fixed": "#311400",
+                        "on-tertiary-container": "#461f00",
+                        "on-surface": "#dee1f7",
+                        "on-secondary-container": "#00311f",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-bright": "#343949",
+                        "glow-emerald": "rgba(16, 185, 129, 0.4)",
+                        "glass-stroke": "rgba(255, 255, 255, 0.1)",
+                        "on-primary-container": "#00285d",
+                        "on-primary-fixed": "#001a42",
+                        "primary": "#adc6ff",
+                        "surface-dim": "#0e1322",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#2b3040",
+                        "surface-container-highest": "#2f3445",
+                        "on-primary": "#002e6a",
+                        "surface-container": "#1a1f2f",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#005ac2",
+                        "tertiary": "#ffb786",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-deep": "#050505",
+                        "surface-container-low": "#161b2b",
+                        "on-background": "#dee1f7",
+                        "glow-blue": "rgba(59, 130, 246, 0.5)",
+                        "secondary-container": "#00a572",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-tint": "#adc6ff",
+                        "background": "#0e1322",
+                        "on-secondary": "#003824",
+                        "tertiary-fixed": "#ffdcc6",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-variant": "#2f3445",
+                        "surface": "#0e1322",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-fixed": "#002113",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#25293a",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "on-tertiary": "#502400",
+                        "on-secondary-fixed-variant": "#005236",
+                        "outline": "#8c909f",
+                        "outline-variant": "#424754",
+                        "secondary": "#4edea3",
+                        "on-error": "#690005",
+                        "tertiary-container": "#df7412",
+                        "inverse-surface": "#dee1f7",
+                        "primary-container": "#4d8eff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "80px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "bento-gap": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-xl-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-xl": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-code": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #050505; color: #dee1f7; scroll-behavior: smooth; }
+        .glass-card { background: rgba(26, 31, 47, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-card:hover { border-color: rgba(255, 255, 255, 0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glow-hover-blue:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .glow-hover-emerald:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 50%, #0e1322 0%, #050505 100%); }
+        .icon-glow-blue { filter: drop-shadow(0 0 8px rgba(173, 198, 255, 0.4)); }
+        .icon-glow-emerald { filter: drop-shadow(0 0 8px rgba(78, 222, 163, 0.4)); }
+        .icon-glow-tertiary { filter: drop-shadow(0 0 8px rgba(255, 183, 134, 0.4)); }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="root"></div>
+<script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const Navbar = () => (
+            <nav className="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-[20px] border-b border-glass-stroke h-20">
+                <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-full max-w-7xl mx-auto">
+                    <div className="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Kurnia Hary</div>
+                    <div className="hidden md:flex items-center gap-gutter font-body-md text-body-md">
+                        <a className="text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary transition-all duration-300" href="#home">Home</a>
+                        <a className="text-on-surface-variant hover:text-primary transition-all duration-300" href="#about">About</a>
+                        <a className="text-on-surface-variant hover:text-primary transition-all duration-300" href="#skills">Skills</a>
+                        <a className="text-on-surface-variant hover:text-primary transition-all duration-300" href="#experience">Experience</a>
+                        <a className="text-on-surface-variant hover:text-primary transition-all duration-300" href="#projects">Projects</a>
+                        <a className="text-on-surface-variant hover:text-primary transition-all duration-300" href="#contact">Contact</a>
+                    </div>
+                    <button className="bg-primary text-on-primary px-6 py-2 rounded-full font-bold active:scale-95 transition-transform duration-300 glow-hover-blue">
+                        Resume
+                    </button>
+                </div>
+            </nav>
+        );
+
+        const Hero = () => (
+            <section className="min-h-screen flex items-center px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-20" id="home">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-6">
+                        <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-code text-label-code">
+                            <span className="mr-2">Available for projects</span>
+                            <div className="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+                        </div>
+                        <h1 className="font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface">Kurnia Hary <span className="text-primary">Trisnandha</span></h1>
+                        <p className="font-headline-md text-headline-md text-on-surface-variant">.NET Developer | Full Stack Web Developer</p>
+                        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                            A passionate software developer with experience in ASP.NET, Laravel, POS systems, and healthcare systems. Focused on building scalable applications and solving real-world problems.
+                        </p>
+                        <div className="flex flex-wrap gap-4 pt-4">
+                            <a className="px-8 py-4 bg-primary text-on-primary rounded-full font-bold glow-hover-blue transition-all" href="#projects">View Portfolio</a>
+                            <a className="px-8 py-4 border border-glass-stroke backdrop-blur-md rounded-full font-bold hover:bg-white/5 transition-all" href="#contact">Contact Me</a>
+                        </div>
+                        <div className="flex gap-6 pt-8">
+                            {[
+                                { name: 'C#', icon: 'devicon-csharp-plain', color: 'primary', glow: 'blue' },
+                                { name: 'PHP', icon: 'devicon-php-plain', color: 'secondary', glow: 'emerald' },
+                                { name: 'JS', icon: 'devicon-javascript-plain', color: 'tertiary', glow: 'tertiary' },
+                                { name: 'SQL', icon: 'devicon-mysql-plain', color: 'primary', glow: 'blue' }
+                            ].map((skill) => (
+                                <div key={skill.name} className="flex flex-col items-center group">
+                                    <div className={`w-14 h-14 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke group-hover:border-${skill.color} transition-all duration-300 group-hover:scale-110`}>
+                                        <i className={`${skill.icon} text-3xl text-${skill.color} icon-glow-${skill.glow}`}></i>
+                                    </div>
+                                    <span className="font-label-code text-[12px] mt-2 text-on-surface-variant">{skill.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="relative flex justify-center">
+                        <div className="absolute inset-0 bg-primary/20 blur-[120px] rounded-full"></div>
+                        <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-glass-stroke">
+                            <img alt="Portrait of Kurnia Hary" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFT0d1bReXNhGZ5LoIl3qIUTD2nbWpPCWhcY7iIlQQomOKaRgX9-QOpKUq4xN92fvqX-DLKGF2lG1QB9ftFk9tHHs4ORwOH1wEUkxQZcVpW1qx8KKH_M5jjELN9pxiwZGgCDYxDd2ASVVX72t8xPYsxCv9i1nwVCI5HDjSB0a8DpSaL4AvGOJBOsddiYTcbCkgk3OV_XBAsDXwHPzlSy9ggYShJgSbWVQpF_UUj1Q368qqCn-TAxN8qApUaCP6-HgJViW_-mOK56vt"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const About = () => (
+            <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto" id="about">
+                <div className="mb-12">
+                    <h2 className="font-headline-lg text-headline-lg mb-4">Professional <span className="text-secondary">Story</span></h2>
+                    <div className="w-20 h-1 bg-secondary rounded-full"></div>
+                </div>
+                <div className="grid md:grid-cols-3 gap-bento-gap">
+                    <div className="md:col-span-2 glass-card p-10 rounded-lg">
+                        <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                            I specialize in architecting robust backend systems and intuitive full-stack web applications. With a strong foundation in C# and the .NET ecosystem, I've spent the last few years developing mission-critical software for healthcare providers and retail environments. My approach combines technical precision with a focus on user experience, ensuring that complex data management remains seamless for the end user.
+                        </p>
+                        <p className="font-body-lg text-body-lg text-on-surface-variant mt-6 leading-relaxed">
+                            From optimizing SQL queries to designing responsive front-end interfaces with Laravel and modern JS frameworks, I thrive in environments that challenge my problem-solving skills.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-bento-gap">
+                        {[
+                            { icon: 'history_toggle_off', from: 'primary', to: 'primary-container', label: 'Years Exp.', value: '2+', onColor: 'on-primary' },
+                            { icon: 'medical_information', from: 'secondary', to: 'secondary-container', label: 'Healthcare', onColor: 'on-secondary' },
+                            { icon: 'payments', from: 'tertiary', to: 'tertiary-container', label: 'POS Expert', onColor: 'on-tertiary' },
+                            { icon: 'layers', from: 'primary', to: 'blue-500', label: 'Full Stack', onColor: 'on-primary' }
+                        ].map((item, idx) => (
+                            <div key={idx} className="glass-card p-6 rounded-lg flex flex-col items-center justify-center text-center group hover:bg-surface-container-high transition-all">
+                                <div className={`w-12 h-12 mb-4 rounded-full bg-gradient-to-br from-${item.from} to-${item.to} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                                    <span className={`material-symbols-outlined text-${item.onColor} text-2xl`}>{item.icon}</span>
+                                </div>
+                                {item.value && <span className="font-headline-md text-2xl text-primary font-bold">{item.value}</span>}
+                                <span className="font-label-code text-on-surface-variant text-[12px]">{item.label}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Skills = () => {
+            const categories = [
+                {
+                    title: 'Languages',
+                    icon: 'terminal',
+                    color: 'secondary',
+                    glow: 'glow-hover-emerald',
+                    skills: [
+                        { name: 'C# / .NET', icon: 'devicon-csharp-plain' },
+                        { name: 'PHP (Laravel)', icon: 'devicon-php-plain' },
+                        { name: 'JavaScript', icon: 'devicon-javascript-plain' },
+                        { name: 'TypeScript', icon: 'devicon-typescript-plain' }
+                    ]
+                },
+                {
+                    title: 'Frameworks',
+                    icon: 'architecture',
+                    color: 'primary',
+                    glow: 'glow-hover-blue',
+                    skills: [
+                        { name: 'ASP.NET Core', icon: 'devicon-dotnetcore-plain' },
+                        { name: 'Laravel', icon: 'devicon-laravel-plain' },
+                        { name: 'React.js', icon: 'devicon-react-original' },
+                        { name: 'Tailwind CSS', icon: 'devicon-tailwindcss-original-wordmark' }
+                    ]
+                },
+                {
+                    title: 'Databases',
+                    icon: 'database',
+                    color: 'tertiary',
+                    glow: 'glow-hover-emerald',
+                    skills: [
+                        { name: 'PostgreSQL', icon: 'devicon-postgresql-plain' },
+                        { name: 'SQL Server', icon: 'devicon-microsoftsqlserver-plain' },
+                        { name: 'MySQL', icon: 'devicon-mysql-plain' },
+                        { name: 'Redis', icon: 'devicon-redis-plain' }
+                    ]
+                },
+                {
+                    title: 'Tools',
+                    icon: 'build',
+                    color: 'on-surface-variant',
+                    glow: '',
+                    skills: [
+                        { name: 'Git / GitHub', icon: 'devicon-github-original' },
+                        { name: 'Docker', icon: 'devicon-docker-plain' },
+                        { name: 'Postman', icon: 'devicon-postman-plain' },
+                        { name: 'Visual Studio', icon: 'devicon-visualstudio-plain' }
+                    ]
+                }
+            ];
+
+            return (
+                <section className="py-20 bg-surface-container-low" id="skills">
+                    <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-headline-lg text-headline-lg mb-4">Technical <span className="text-primary">Arsenal</span></h2>
+                            <p className="font-body-lg text-on-surface-variant">Tools and technologies I use to bring ideas to life.</p>
+                        </div>
+                        <div className="grid md:grid-cols-4 gap-bento-gap">
+                            {categories.map((cat, i) => (
+                                <div key={i} className={`glass-card p-8 rounded-lg ${cat.glow} border-l-4 border-l-${cat.color} group`}>
+                                    <div className="flex items-center justify-between mb-6">
+                                        <h3 className="font-headline-md text-headline-md">{cat.title}</h3>
+                                        <span className={`material-symbols-outlined text-${cat.color} text-3xl`}>{cat.icon}</span>
+                                    </div>
+                                    <ul className="space-y-4">
+                                        {cat.skills.map((skill, si) => (
+                                            <li key={si} className="flex items-center gap-3">
+                                                <i className={`${skill.icon} text-${cat.color}`}></i>
+                                                <span className="font-body-md">{skill.name}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Experience = () => (
+            <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto" id="experience">
+                <div className="mb-16">
+                    <h2 className="font-headline-lg text-headline-lg mb-4">Work <span className="text-primary">Journey</span></h2>
+                    <div className="w-20 h-1 bg-primary rounded-full"></div>
+                </div>
+                <div className="relative border-l-2 border-glass-stroke ml-4 md:ml-8">
+                    {[
+                        {
+                            color: 'primary',
+                            glow: 'rgba(173,198,255,0.8)',
+                            icon: 'local_hospital',
+                            badge: 'medical_services',
+                            period: 'Dec 2022 - Present',
+                            company: 'RS Husada Utama Surabaya',
+                            role: 'IT Programmer',
+                            desc: 'Developed healthcare web applications using ASP.NET and C#. Managed complex database systems with SQL Server and generated detailed clinical reporting using Crystal Reports.'
+                        },
+                        {
+                            color: 'secondary',
+                            glow: 'rgba(16,185,129,0.8)',
+                            icon: 'apartment',
+                            badge: 'meeting_room',
+                            period: 'Aug 2021 - Oct 2021',
+                            company: 'Aston Madiun Hotel',
+                            role: 'IT Staff Intern',
+                            desc: 'Responsible for LAN installation, workstation troubleshooting, and regular hardware maintenance to ensure seamless hotel operations.'
+                        },
+                        {
+                            color: 'tertiary',
+                            glow: 'rgba(255,183,134,0.5)',
+                            icon: 'web',
+                            badge: 'palette',
+                            period: 'Feb 2021 - July 2021',
+                            company: 'PT Samudra Mutiara Satria',
+                            role: 'IT & Design Staff',
+                            desc: 'Managed company web presence via WordPress and Blogspot. Handled multimedia editing and digital content management.'
+                        },
+                        {
+                            color: 'primary',
+                            period: 'Sept 2020 - Dec 2020',
+                            company: 'eFABe Entertainment',
+                            role: 'Digital Marketing Intern',
+                            desc: 'Focused on Search Engine Optimization (SEO) and creative content creation to drive audience engagement.'
+                        }
+                    ].map((exp, i) => (
+                        <div key={i} className="mb-12 relative">
+                            <div className={`absolute -left-[9px] top-0 w-4 h-4 bg-${exp.color} rounded-full ring-4 ring-${exp.color}/20 ${exp.glow ? `shadow-[0_0_15px_${exp.glow}]` : ''}`}></div>
+                            <div className="pl-12">
+                                <div className="glass-card p-8 rounded-lg relative overflow-hidden">
+                                    {exp.icon && <span className={`absolute top-4 right-4 material-symbols-outlined text-${exp.color}/10 text-6xl`}>{exp.icon}</span>}
+                                    <span className={`font-label-code text-${exp.color}`}>{exp.period}</span>
+                                    <div className="flex items-center gap-3 mt-2">
+                                        <h3 className="font-headline-md text-headline-md">{exp.company}</h3>
+                                        {exp.badge && <span className={`material-symbols-outlined text-${exp.color} text-xl`}>{exp.badge}</span>}
+                                    </div>
+                                    <p className="text-on-surface-variant font-bold mb-4">{exp.role}</p>
+                                    <p className="text-on-surface-variant">{exp.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const Projects = () => (
+            <section className="py-20 bg-surface-container" id="projects">
+                <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+                    <div className="flex justify-between items-end mb-16">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg mb-4">Featured <span className="text-secondary">Projects</span></h2>
+                            <p className="text-on-surface-variant">A collection of systems built with precision and scalability.</p>
+                        </div>
+                        <a className="hidden md:flex items-center gap-2 text-primary hover:gap-4 transition-all" href="#">
+                            View All Projects <span className="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div className="grid md:grid-cols-12 grid-rows-2 gap-bento-gap">
+                        {/* Project 1 */}
+                        <div className="md:col-span-8 glass-card rounded-lg overflow-hidden group">
+                            <div className="h-64 overflow-hidden relative">
+                                <img alt="Dental Clinic System" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWr3RlSrBbDWt-yPpEi-Ymw2AJSh5M8VpvacXu3TXyzMEr8LHAqUPcwNxZLhPMRK14gNQL-1_rt0bwhUFAdixFtRbnXYWO9N2flgzZgBviQ10gCUk6CyaTPajZhAQycv1lMMHa0NuqJz3WgFn-96LCQ8QtEZgyrMC2p_Xac5Y1lZGGWB6I8ZsEKwNHaSkEE5PCzzAlVhS6JeMwE4DQWXQfKcmCYhBu4hQRIu43kxrR7svblf9l3_Khi18esHFSWPzJQZL0tUeptW6t"/>
+                                <div className="absolute inset-0 bg-gradient-to-t from-surface-deep to-transparent"></div>
+                            </div>
+                            <div className="p-8">
+                                <h3 className="font-headline-md text-headline-md mb-2">Dental Clinic Management</h3>
+                                <p className="text-on-surface-variant mb-6">Comprehensive system for managing patient records, billing, and clinical appointments with ASP.NET Core.</p>
+                                <div className="flex gap-4">
+                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-label-code">
+                                        <i className="devicon-dotnetcore-plain"></i>
+                                        <span>ASP.NET</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-label-code">
+                                        <i className="devicon-postgresql-plain"></i>
+                                        <span>PostgreSQL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Project 2 */}
+                        <div className="md:col-span-4 glass-card rounded-lg overflow-hidden group">
+                            <div className="h-48 overflow-hidden relative">
+                                <img alt="POS System" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuV3RxweD9UE5oG9p-2Qi9p3H7Db_kjM93qWjUR_rq3rAfDEkBWOWqgeOa5A6jpLCQCtIvYnvrGd1He8eVYi7HWGei0SMrsZeKYv0nBDyWjtpqyqfEGxDQVBqrjlRqvQqm5ds7fpy4NPrBpqoKI_Ldz2JlNRQ6CCXmI0uwBz-1tTEsGM_ajQAyJkS4hasnDV9dnjpM49HUoJFRQx4N2L2zRwf_vBPxsyBFZew8NN3GxIIe1jtO_xaGvHNgySqvvco2thCoq9QjOnER"/>
+                            </div>
+                            <div className="p-6">
+                                <h3 className="font-headline-md text-headline-md mb-2 text-xl">Retail POS System</h3>
+                                <p className="text-on-surface-variant text-sm mb-4">Inventory and sales management with real-time analytics.</p>
+                                <div className="flex items-center gap-1.5 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-label-code w-fit">
+                                    <i className="devicon-laravel-plain"></i>
+                                    <span>Laravel</span>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Project 3 */}
+                        <div className="md:col-span-4 glass-card rounded-lg overflow-hidden group">
+                            <div className="p-6 h-full flex flex-col">
+                                <div className="w-12 h-12 rounded-xl bg-tertiary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="material-symbols-outlined text-tertiary text-3xl">apartment</span>
+                                </div>
+                                <h3 className="font-headline-md text-headline-md mb-2 text-xl">Hotel Management</h3>
+                                <p className="text-on-surface-variant text-sm mb-auto">Integrated system for room booking and guest management.</p>
+                                <div className="flex gap-2 mt-4">
+                                    <div className="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-label-code flex items-center gap-1">
+                                        <i className="devicon-csharp-plain"></i> C#
+                                    </div>
+                                    <div className="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-label-code flex items-center gap-1">
+                                        <i className="devicon-microsoftsqlserver-plain"></i> SQL Server
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Project 4 */}
+                        <div className="md:col-span-8 glass-card rounded-lg overflow-hidden group">
+                            <div className="h-48 overflow-hidden relative">
+                                <img alt="HIS System" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZZr8TQw1BU-udNNrlBbA3JC025vkunCpGP6nz76dSD-kXwQvmvIz8lvOM8EUwXl8G5DrTb7AtqB6GWXyuXAzsVWGGBEt2sdnrQD0QMkv6lHl61ksp-Ud2HFhAKKcML_WWxovUCJg8cWvZEi8t0FXAGHqJqFm7i8f0jq2jpepjMAnVECGf0fBpSVMzc_d3jpyQ27wPBy4JNn8m-o_vM_diShPVgTX96_IZkC9ViLLl9EBFdQPrWhtCts83j5yXD9KnTLMmRNCxSsFf"/>
+                            </div>
+                            <div className="p-8">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <h3 className="font-headline-md text-headline-md">Hospital Information System</h3>
+                                    <span className="material-symbols-outlined text-primary">health_and_safety</span>
+                                </div>
+                                <p className="text-on-surface-variant mb-4">Enterprise-grade medical software handling thousands of daily transactions and patient files.</p>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-label-code">ASP.NET</span>
+                                    <span className="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-label-code">Crystal Reports</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const EducationAndCerts = () => (
+            <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-gutter">
+                    <div>
+                        <h2 className="font-headline-lg text-headline-lg mb-8">Education</h2>
+                        <div className="space-y-6">
+                            {[
+                                { title: 'Wearnes Education Center Madiun', sub: 'Diploma 1 - Information Technology', desc: 'Informatics & Computer Science major. Focused on Application Development and Database Management. Recognized for excellence in .NET ecosystem development.', icon: 'school' },
+                                { title: 'SMKN 5 Madiun', sub: 'Computer & Network Engineering', desc: 'IT Network System Administration competition participant. Proficient in Linux server configuration and Cisco protocols.', icon: 'settings_ethernet' }
+                            ].map((edu, i) => (
+                                <div key={i} className="glass-card p-6 rounded-lg flex gap-6 items-start hover:bg-surface-container-high transition-colors">
+                                    <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center shrink-0 shadow-lg">
+                                        <span className="material-symbols-outlined text-primary text-3xl">{edu.icon}</span>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-headline-md text-xl font-bold">{edu.title}</h4>
+                                        <p className="text-primary font-label-code text-sm">{edu.sub}</p>
+                                        <p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed">{edu.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="font-headline-lg text-headline-lg mb-8">Certifications</h2>
+                        <div className="space-y-6">
+                            {[
+                                { title: 'BNSP - Digital Marketing', desc: 'Professional certification in digital strategy and market analysis.', icon: 'verified', devicon: false },
+                                { title: 'Google Technical Support', desc: 'Coursera IT Support Professional Certificate covering troubleshooting.', icon: '', devicon: 'devicon-google-plain' },
+                                { title: 'LinkedIn Learning Path', desc: 'Advanced training in ASP.NET Core and SQL Server.', icon: '', devicon: 'devicon-linkedin-plain' },
+                                { title: 'MTCNA & Cisco Networking', desc: 'Proficiency in Mikrotik and Cisco routing standards.', icon: 'router', devicon: false }
+                            ].map((cert, i) => (
+                                <div key={i} className="glass-card p-6 rounded-lg flex gap-6 items-center hover:bg-surface-container-high transition-colors">
+                                    <div className="w-14 h-14 rounded-xl bg-white/5 border border-glass-stroke flex items-center justify-center shrink-0">
+                                        {cert.devicon ? (
+                                            <i className={`${cert.devicon} text-3xl text-secondary`}></i>
+                                        ) : (
+                                            <span className="material-symbols-outlined text-secondary text-3xl">{cert.icon}</span>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-body-lg font-bold">{cert.title}</h4>
+                                        <p className="text-on-surface-variant text-sm">{cert.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <section className="py-20 bg-surface-deep" id="contact">
+                <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto text-center">
+                    <div className="inline-block glass-card p-12 rounded-lg max-w-3xl w-full border-t-4 border-t-primary">
+                        <h2 className="font-headline-lg text-headline-lg mb-4">Let's <span className="text-primary">Collaborate</span></h2>
+                        <p className="text-on-surface-variant mb-12">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                        <div className="grid md:grid-cols-2 gap-8 text-left mb-12">
+                            <a className="flex items-center gap-4 group" href="mailto:contact@kurniahary.com">
+                                <div className="w-14 h-14 rounded-xl bg-surface-container border border-glass-stroke flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all shadow-md">
+                                    <span className="material-symbols-outlined text-primary text-3xl">alternate_email</span>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-on-surface-variant font-label-code">Email Me</p>
+                                    <p className="font-bold">contact@kurniahary.com</p>
+                                </div>
+                            </a>
+                            <a className="flex items-center gap-4 group" href="#">
+                                <div className="w-14 h-14 rounded-xl bg-surface-container border border-glass-stroke flex items-center justify-center group-hover:bg-secondary/20 group-hover:scale-110 transition-all shadow-md">
+                                    <span className="material-symbols-outlined text-secondary text-3xl">chat_bubble</span>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-on-surface-variant font-label-code">WhatsApp</p>
+                                    <p className="font-bold">+62 822 XXX XXX</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="flex justify-center gap-8">
+                            <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#">
+                                <i className="devicon-github-original text-2xl"></i>
+                            </a>
+                            <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#">
+                                <i className="devicon-linkedin-plain text-2xl"></i>
+                            </a>
+                            <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#">
+                                <span className="material-symbols-outlined text-2xl">person_search</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="w-full py-20 bg-surface-deep border-t border-glass-stroke">
+                <div className="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter w-full max-w-7xl mx-auto">
+                    <div className="font-headline-md text-headline-md font-bold text-on-surface">Kurnia Hary</div>
+                    <p className="font-body-md text-body-md text-on-surface-variant">© 2024 Kurnia Hary Trisnandha. All rights reserved.</p>
+                    <div className="flex gap-6 font-body-md text-body-md">
+                        <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Github</a>
+                        <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">LinkedIn</a>
+                        <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Source Code</a>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            return (
+                <div className="font-body-md text-on-surface">
+                    <div className="particles-bg"></div>
+                    <Navbar />
+                    <main className="pt-20">
+                        <Hero />
+                        <About />
+                        <Skills />
+                        <Experience />
+                        <Projects />
+                        <EducationAndCerts />
+                        <Contact />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body></html>
