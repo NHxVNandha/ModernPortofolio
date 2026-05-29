@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import TrueFocus from './components/TrueFocus.jsx'
 import ElectricBorder from './components/ElectricBorder.jsx'
 import TargetCursor from './components/TargetCursor.jsx'
 import Dock from './components/Dock.jsx'
 import Lanyard from './components/Lanyard.jsx'
+import GitHubCommitChart from './components/GitHubCommitChart.jsx'
+import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
 
 const GITHUB_USERNAME = 'NHxVNandha'
 const GITHUB_REFRESH_INTERVAL = 60000
 const GITHUB_SNAKE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_USERNAME}/output/github-contribution-grid-snake-dark.svg`
+const CONTRIBUTION_YEARS_TO_SHOW = 3
 
 const formatCompactDate = (value) => {
   if (!value) return 'Unknown'
@@ -64,13 +67,34 @@ const getActivityLabel = (event) => {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [musicOpen, setMusicOpen] = useState(false)
+  const [musicPlayRequest, setMusicPlayRequest] = useState(1)
+  const [nowPlaying, setNowPlaying] = useState({
+    title: 'No track',
+    artist: 'Unknown',
+    mood: 'Unknown',
+  })
+  const [musicIsPlaying, setMusicIsPlaying] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [activeDockSection, setActiveDockSection] = useState('home')
   const [isContactVisible, setIsContactVisible] = useState(false)
   const [githubRepos, setGithubRepos] = useState([])
   const [githubEvents, setGithubEvents] = useState([])
   const [githubLoading, setGithubLoading] = useState(true)
   const [githubError, setGithubError] = useState('')
   const [githubLastSync, setGithubLastSync] = useState(null)
+  const [privateSummary, setPrivateSummary] = useState({
+    enabled: false,
+    reason: '',
+    privateContributions: 0,
+    totalContributions: 0,
+    publicContributions: 0,
+    weeklyContributions: [],
+    year: new Date().getFullYear(),
+    range: null,
+  })
+  const [privateSummaryLoading, setPrivateSummaryLoading] = useState(true)
+  const [selectedContributionYear, setSelectedContributionYear] = useState(new Date().getFullYear())
   const [snakeAvailable, setSnakeAvailable] = useState(true)
   const contactBorderRef = useRef(null)
   const homeTechs = [
@@ -95,20 +119,31 @@ function App() {
   ]
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'experience', 'projects', 'contact']
+    const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'contact']
     const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
+    const dockSections = ['home', 'skills', 'education', 'projects', 'contact'].map((id) => document.getElementById(id)).filter(Boolean)
 
     const updateActiveSection = () => {
       const viewportAnchor = window.scrollY + window.innerHeight * 0.33
       let currentId = 'home'
+      let currentDockId = 'home'
 
       sections.forEach((section) => {
-        if (section.offsetTop <= viewportAnchor) {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY
+        if (sectionTop <= viewportAnchor) {
           currentId = section.id
         }
       })
 
+      dockSections.forEach((section) => {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY
+        if (sectionTop <= viewportAnchor) {
+          currentDockId = section.id
+        }
+      })
+
       setActiveSection((prev) => (prev === currentId ? prev : currentId))
+      setActiveDockSection((prev) => (prev === currentDockId ? prev : currentDockId))
     }
 
     updateActiveSection()
@@ -120,6 +155,58 @@ function App() {
       window.removeEventListener('resize', updateActiveSection)
     }
   }, [])
+
+  useEffect(() => {
+    let ignore = false
+
+    const fetchPrivateSummary = async () => {
+      if (!ignore) {
+        setPrivateSummaryLoading(true)
+      }
+
+      try {
+        const response = await fetch(`/api/github-private-summary?year=${selectedContributionYear}`)
+        const payload = await response.json()
+        if (ignore) return
+
+        if (!response.ok) {
+          setPrivateSummary({
+            enabled: false,
+            reason: payload?.reason || 'Unable to load private summary',
+            privateContributions: 0,
+            totalContributions: 0,
+            weeklyContributions: [],
+            range: null,
+          })
+        } else {
+          setPrivateSummary(payload)
+        }
+      } catch {
+        if (!ignore) {
+          setPrivateSummary({
+            enabled: false,
+            reason: 'Unable to load private summary',
+            privateContributions: 0,
+            totalContributions: 0,
+            weeklyContributions: [],
+            range: null,
+          })
+        }
+      } finally {
+        if (!ignore) {
+          setPrivateSummaryLoading(false)
+        }
+      }
+    }
+
+    fetchPrivateSummary()
+    const intervalId = window.setInterval(fetchPrivateSummary, GITHUB_REFRESH_INTERVAL)
+
+    return () => {
+      ignore = true
+      window.clearInterval(intervalId)
+    }
+  }, [selectedContributionYear])
 
   useEffect(() => {
     const nodes = document.querySelectorAll('.rb-reveal')
@@ -180,7 +267,7 @@ function App() {
         setGithubEvents(eventsData)
         setGithubLastSync(new Date().toISOString())
         setGithubError('')
-      } catch (error) {
+      } catch {
         if (!ignore) {
           setGithubError('Unable to sync GitHub data right now.')
         }
@@ -247,10 +334,15 @@ function App() {
     el.style.setProperty('--spot-y', `${y}px`)
   }
 
-  const navClass = (id) =>
-    activeSection === id
+  const navClass = (id) => {
+    const isActive = id === 'experience'
+      ? activeSection === 'experience' || activeSection === 'education'
+      : activeSection === id
+
+    return isActive
       ? 'text-primary font-bold border-b-2 border-primary pb-1 transition-all duration-300'
       : 'text-on-surface-variant hover:text-primary transition-all duration-300'
+  }
 
   const jumpTo = (id) => {
     setMenuOpen(false)
@@ -258,11 +350,11 @@ function App() {
   }
 
   const mobileDockItems = [
-    { icon: <span className="material-symbols-outlined text-[20px]">home</span>, label: 'Home', onClick: () => jumpTo('home'), className: activeSection === 'home' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">person</span>, label: 'About', onClick: () => jumpTo('about'), className: activeSection === 'about' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">auto_awesome</span>, label: 'Skills', onClick: () => jumpTo('skills'), className: activeSection === 'skills' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">work</span>, label: 'Projects', onClick: () => jumpTo('projects'), className: activeSection === 'projects' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">mail</span>, label: 'Contact', onClick: () => jumpTo('contact'), className: activeSection === 'contact' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">home</span>, label: 'Home', onClick: () => jumpTo('home'), className: activeDockSection === 'home' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">auto_awesome</span>, label: 'Skills', onClick: () => jumpTo('skills'), className: activeDockSection === 'skills' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">school</span>, label: 'Education', onClick: () => jumpTo('education'), className: activeDockSection === 'education' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">work</span>, label: 'Projects', onClick: () => jumpTo('projects'), className: activeDockSection === 'projects' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">mail</span>, label: 'Contact', onClick: () => jumpTo('contact'), className: activeDockSection === 'contact' ? 'rb-dock-active' : '' },
   ]
 
   const projectRepos = githubRepos.slice(0, 6)
@@ -290,6 +382,42 @@ function App() {
     if (!items[commit.repo]) items[commit.repo] = commit
     return items
   }, {})
+  const contributionYears = useMemo(() => {
+    const currentYear = new Date().getFullYear()
+    return Array.from({ length: CONTRIBUTION_YEARS_TO_SHOW }, (_, index) => currentYear - index)
+  }, [])
+
+  const toggleMusicPanel = () => {
+    setMusicOpen((prev) => {
+      const next = !prev
+      if (next) {
+        setMusicPlayRequest((value) => value + 1)
+      }
+      return next
+    })
+  }
+
+  const triggerMusicPlayback = () => {
+    setMusicPlayRequest((value) => value + 1)
+  }
+
+  const handleTrackTitleChange = useCallback((title) => {
+    setNowPlaying((prev) => (prev.title === title ? prev : { ...prev, title }))
+  }, [])
+
+  const handleTrackMetaChange = useCallback((nextMeta) => {
+    setNowPlaying((prev) => {
+      if (
+        prev.title === nextMeta.title
+        && prev.artist === nextMeta.artist
+        && prev.mood === nextMeta.mood
+      ) {
+        return prev
+      }
+
+      return nextMeta
+    })
+  }, [])
 
   return (
     <div className="font-body-md text-on-surface rb-root">
@@ -318,7 +446,19 @@ function App() {
             <a className={navClass('projects')} href="#projects">Projects</a>
             <a className={navClass('contact')} href="#contact">Contact</a>
           </div>
-          <button className="hidden md:inline-flex bg-primary text-on-primary px-6 py-2 rounded-full font-bold active:scale-95 transition-transform duration-300 glow-hover-blue">Resume</button>
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              type="button"
+              className="rb-music-toggle"
+              onClick={toggleMusicPanel}
+              aria-expanded={musicOpen}
+              aria-controls="global-music-player"
+            >
+              <span className="material-symbols-outlined text-base">library_music</span>
+              <span>{musicOpen ? 'Close Music' : 'Open Music'}</span>
+            </button>
+            <button className="bg-primary text-on-primary px-6 py-2 rounded-full font-bold active:scale-95 transition-transform duration-300 glow-hover-blue">Resume</button>
+          </div>
           <button
             type="button"
             className="md:hidden w-11 h-11 inline-flex items-center justify-center rounded-xl border border-glass-stroke bg-surface-container-low text-on-surface"
@@ -334,7 +474,7 @@ function App() {
             <div className="px-margin-mobile py-4 flex flex-col gap-3 font-body-md">
               <a className={activeSection === 'home' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#home" onClick={() => setMenuOpen(false)}>Home</a>
               <a className={activeSection === 'skills' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
-              <a className={activeSection === 'experience' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
+              <a className={activeSection === 'experience' || activeSection === 'education' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
               <a className={activeSection === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
               <a className={activeSection === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
               <button className="mt-2 bg-primary text-on-primary px-6 py-3 rounded-full font-bold w-full">Resume</button>
@@ -343,8 +483,21 @@ function App() {
         ) : null}
       </nav>
 
+      <div className="rb-now-playing-bar" aria-live="polite">
+        <div className="rb-now-playing-track">
+          <span className={`rb-now-playing-dot ${musicIsPlaying ? 'is-active' : ''}`} aria-hidden="true" />
+          <span className="rb-now-playing-label">{musicIsPlaying ? 'Now Playing' : 'Music Paused'}</span>
+          <span className="rb-now-playing-sep">-</span>
+          <span className="rb-now-playing-meta">{nowPlaying.artist}</span>
+          <span className="rb-now-playing-sep">-</span>
+          <span className="rb-now-playing-title">{nowPlaying.title}</span>
+          <span className="rb-now-playing-sep">-</span>
+          <span className="rb-now-playing-meta">{nowPlaying.mood}</span>
+        </div>
+      </div>
+
       {!menuOpen ? (
-        <div className="md:hidden rb-mobile-dock">
+        <div className="rb-mobile-dock">
           <Dock
             items={mobileDockItems}
             panelHeight={58}
@@ -358,7 +511,7 @@ function App() {
       ) : null}
 
       <main className="pt-20 pb-28 md:pb-0">
-        <section className="min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-20 rb-reveal rb-home" id="home">
+        <section className="min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-20 overflow-x-clip rb-reveal rb-home" id="home">
           <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
             <div className="space-y-6 md:-mt-6 rb-profile-card">
               <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-code text-label-code">
@@ -385,7 +538,7 @@ function App() {
 
             </div>
               <div className="md:pt-2">
-              <div className="relative flex justify-center hero-portrait" onMouseMove={tiltMove} onMouseLeave={tiltLeave}>
+              <div className="relative flex justify-center max-w-[280px] mx-auto md:max-w-none hero-portrait" onMouseMove={tiltMove} onMouseLeave={tiltLeave}>
                 <div className="absolute inset-0 bg-primary/20 blur-[120px] rounded-full" />
                 <div className="magic-rings" aria-hidden="true">
                   <span className="magic-ring ring-a" />
@@ -393,7 +546,12 @@ function App() {
                   <span className="magic-ring ring-c" />
                 </div>
                 <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-glass-stroke rb-tilt">
-                  <img alt="Portrait of Kurnia Hary" className="w-full h-full object-cover" src="/profile.png" />
+                  <img
+                    alt="Portrait of Kurnia Hary"
+                    className="w-full h-full object-cover cursor-pointer"
+                    src="/profile.png"
+                    onClick={triggerMusicPlayback}
+                  />
                 </div>
               </div>
               <div className="home-tech-marquee pt-10">
@@ -417,7 +575,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+        <section className="py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto scroll-mt-24" id="skills">
           <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
             <div className="rb-reveal rb-about" id="about">
               <div className="glass-card p-8 rounded-lg grid gap-bento-gap">
@@ -431,9 +589,9 @@ function App() {
               </div>
             </div>
 
-            <div className="rb-reveal rb-skills" id="skills">
+            <div className="rb-reveal rb-skills">
               <div className="glass-card p-8 rounded-lg">
-                <div className="text-left mb-8"><span className="rb-lanyard">Reflective Card</span><h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Technical <span className="text-primary">Arsenal</span></h2><p className="font-body-md text-sm text-on-surface-variant leading-relaxed">Tools and technologies I use to bring ideas to life.</p></div>
+                <div className="text-left mb-8"><h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Technical <span className="text-primary">Arsenal</span></h2><p className="font-body-md text-sm text-on-surface-variant leading-relaxed">Tools and technologies I use to bring ideas to life.</p></div>
                 <div className="grid sm:grid-cols-2 gap-4">
               <div className="glass-card arsenal-card arsenal-card-lang p-5 rounded-lg glow-hover-emerald bg-gradient-to-br from-secondary/10 to-surface-container-low min-w-0 rb-tilt" onMouseMove={tiltMove} onMouseLeave={tiltLeave}>
                 <div className="flex items-center justify-between mb-4"><h3 className="font-headline-md text-xl text-secondary">Languages</h3><span className="material-symbols-outlined text-secondary text-2xl">terminal</span></div>
@@ -464,7 +622,6 @@ function App() {
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="order-2">
               <div className="mb-12">
-                <span className="rb-lanyard">Lanyard</span>
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Work <span className="text-primary">Journey</span></h2>
                 <div className="w-20 h-1 bg-primary rounded-full" />
                 <p className="mt-6 max-w-3xl text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">A journey across software engineering, infrastructure support, creative production, and digital marketing, with hands-on execution in real operational environments.</p>
@@ -478,7 +635,7 @@ function App() {
                   <span className="absolute top-4 right-4 material-symbols-outlined text-primary/10 text-6xl">local_hospital</span>
                   <span className="font-label-code text-primary">Dec 2022 - Present</span>
                   <div className="flex items-center gap-3 mt-2">
-                    <h3 className="font-headline-md text-headline-md">RS Husada Utama Surabaya</h3>
+                    <h3 className="font-headline-md text-xl font-bold">RS Husada Utama Surabaya</h3>
                     <span className="material-symbols-outlined text-primary text-xl">medical_services</span>
                   </div>
                   <p className="text-on-surface-variant font-bold mb-4">IT Programmer</p>
@@ -494,7 +651,7 @@ function App() {
                   <span className="absolute top-4 right-4 material-symbols-outlined text-secondary/10 text-6xl">apartment</span>
                   <span className="font-label-code text-secondary">Aug 2021 - Oct 2021</span>
                   <div className="flex items-center gap-3 mt-2">
-                    <h3 className="font-headline-md text-headline-md">Aston Madiun Hotel &amp; Conference Center</h3>
+                    <h3 className="font-headline-md text-xl font-bold">Aston Madiun Hotel &amp; Conference Center</h3>
                     <span className="material-symbols-outlined text-secondary text-xl">meeting_room</span>
                   </div>
                   <p className="text-on-surface-variant font-bold mb-4">IT Staff - 2 Month Internship</p>
@@ -510,7 +667,7 @@ function App() {
                   <span className="absolute top-4 right-4 material-symbols-outlined text-tertiary/10 text-6xl">web</span>
                   <span className="font-label-code text-tertiary">Feb 2021 - Jul 2021</span>
                   <div className="flex items-center gap-3 mt-2">
-                    <h3 className="font-headline-md text-headline-md">PT Samudra Mutiara Satria</h3>
+                    <h3 className="font-headline-md text-xl font-bold">PT Samudra Mutiara Satria</h3>
                     <span className="material-symbols-outlined text-tertiary text-xl">palette</span>
                   </div>
                   <p className="text-on-surface-variant font-bold mb-4">IT &amp; Design Staff - 5 Month Work</p>
@@ -524,7 +681,7 @@ function App() {
               <div className="pl-12">
                 <div className="glass-card p-8 rounded-lg">
                   <span className="font-label-code text-primary">Sep 2020 - Dec 2020</span>
-                  <h3 className="font-headline-md text-headline-md mt-2">eFABe Entertainment</h3>
+                  <h3 className="font-headline-md text-xl font-bold mt-2">eFABe Entertainment</h3>
                   <p className="text-on-surface-variant font-bold mb-4">Digital Marketing - 2 Month Internship</p>
                   <p className="text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Conducted keyword research and market analysis. Managed social media optimization and content creation with copywriting. Supported online advertising promotions and campaign execution. Operated photography techniques and equipment, including post-processing for photo and video assets.</p>
                 </div>
@@ -536,7 +693,7 @@ function App() {
               <div className="pl-12">
                 <div className="glass-card p-8 rounded-lg">
                   <span className="font-label-code text-secondary">2019 - 2020</span>
-                  <h3 className="font-headline-md text-headline-md mt-2">CV Elsa Mandiri Abadi</h3>
+                  <h3 className="font-headline-md text-xl font-bold mt-2">CV Elsa Mandiri Abadi</h3>
                   <p className="text-on-surface-variant font-bold mb-4">Computer Technician - 2 Month Work &amp; 5 Month Internship</p>
                   <p className="text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Diagnosed PC operational issues and performed system repair/reset procedures. Diagnosed and resolved printer issues. Installed LAN devices and executed preventive maintenance for PCs, printers, and computer laboratory equipment.</p>
                 </div>
@@ -545,7 +702,7 @@ function App() {
             </div>
             </div>
 
-            <div className="rb-reveal rb-education order-1">
+            <div className="rb-reveal rb-education order-1 scroll-mt-24" id="education">
               <div className="mb-12">
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Education</h2>
                 <div className="w-20 h-1 bg-secondary rounded-full" />
@@ -560,7 +717,7 @@ function App() {
                       <div className="pl-12">
                         <div className="glass-card p-6 rounded-lg flex gap-6 items-start hover:bg-surface-container-high transition-colors rb-target-card rb-target-edu">
                           <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center shrink-0 shadow-lg"><span className="material-symbols-outlined text-primary text-3xl">school</span></div>
-                          <div><h4 className="font-headline-md text-xl font-bold">Politeknik Elektronika Negeri Surabaya</h4><p className="text-primary font-label-code text-sm">Diploma 3 - Teknik Informatika (Present)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed">Currently pursuing Diploma 3 in Informatics Engineering with focus on software engineering, backend development, and modern web technologies to strengthen industry-ready technical skills.</p></div>
+                          <div><h4 className="font-headline-md text-xl font-bold">Politeknik Elektronika Negeri Surabaya</h4><p className="text-primary font-label-code text-sm">Diploma 3 - Teknik Informatika (Present)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed text-justify">Currently pursuing Diploma 3 in Informatics Engineering with focus on software engineering, backend development, and modern web technologies to strengthen industry-ready technical skills.</p></div>
                         </div>
                       </div>
                     </div>
@@ -570,7 +727,7 @@ function App() {
                       <div className="pl-12">
                         <div className="glass-card p-6 rounded-lg flex gap-6 items-start hover:bg-surface-container-high transition-colors rb-target-card rb-target-edu">
                           <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center shrink-0 shadow-lg"><span className="material-symbols-outlined text-primary text-3xl">school</span></div>
-                          <div><h4 className="font-headline-md text-xl font-bold">Wearnes Education Center Madiun</h4><p className="text-primary font-label-code text-sm">Diploma 1 - Information Technology (Graduated 2022)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed">Informatics & Computer Science major. Focused on Application Development and Database Management. Recognized for excellence in .NET ecosystem development.</p></div>
+                          <div><h4 className="font-headline-md text-xl font-bold">Wearnes Education Center Madiun</h4><p className="text-primary font-label-code text-sm">Diploma 1 - Information Technology (Graduated 2022)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed text-justify">Informatics & Computer Science major. Focused on Application Development and Database Management. Recognized for excellence in .NET ecosystem development.</p></div>
                         </div>
                       </div>
                     </div>
@@ -580,7 +737,7 @@ function App() {
                       <div className="pl-12">
                         <div className="glass-card p-6 rounded-lg flex gap-6 items-start hover:bg-surface-container-high transition-colors rb-target-card rb-target-edu">
                           <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center shrink-0 shadow-lg"><span className="material-symbols-outlined text-primary text-3xl">settings_ethernet</span></div>
-                          <div><h4 className="font-headline-md text-xl font-bold">SMKN 5 Madiun</h4><p className="text-primary font-label-code text-sm">Computer & Network Engineering (Graduated 2021)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed">IT Network System Administration competition participant. Proficient in Linux server configuration and Cisco protocols.</p></div>
+                          <div><h4 className="font-headline-md text-xl font-bold">SMKN 5 Madiun</h4><p className="text-primary font-label-code text-sm">Computer & Network Engineering (Graduated 2021)</p><p className="text-on-surface-variant mt-2 font-body-md text-sm leading-relaxed text-justify">IT Network System Administration competition participant. Proficient in Linux server configuration and Cisco protocols.</p></div>
                         </div>
                       </div>
                     </div>
@@ -629,7 +786,6 @@ function App() {
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
               <div className="relative">
-                <span className="rb-lanyard">Live GitHub</span>
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">GitHub <span className="text-secondary">Projects</span></h2>
                 <div className="w-20 h-1 bg-secondary rounded-full" />
                 <p className="mt-6 text-on-surface-variant max-w-3xl font-body-md text-sm text-justify leading-relaxed">Repository data is synced directly from GitHub, so new projects, stars, forks, languages, commits, and public activity update automatically.</p>
@@ -645,6 +801,23 @@ function App() {
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary border border-secondary/20 font-label-code text-xs"><span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />Auto-refresh 60s</span>
               <span className="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-code text-xs">Last sync: {githubLastSync ? formatRelativeTime(githubLastSync) : 'syncing...'}</span>
               {githubError ? <span className="px-4 py-2 rounded-full bg-tertiary/10 text-tertiary font-label-code text-xs">{githubError}</span> : null}
+            </div>
+
+            <div className="mb-10">
+              <GitHubCommitChart
+                data={privateSummary.weeklyContributions}
+                isLoading={privateSummaryLoading}
+                years={contributionYears}
+                selectedYear={selectedContributionYear}
+                onSelectYear={setSelectedContributionYear}
+                totals={{
+                  total: privateSummary.totalContributions,
+                  public: privateSummary.publicContributions,
+                  private: privateSummary.privateContributions,
+                }}
+                summaryEnabled={privateSummary.enabled}
+                summaryReason={privateSummary.reason}
+              />
             </div>
 
             <div className="github-snake-card mb-10">
@@ -770,11 +943,12 @@ function App() {
                   </div>
                 </div>
 
-                <div className="w-full h-[300px] md:h-[340px] rounded-3xl overflow-hidden border border-glass-stroke bg-surface-container-low">
+                <div className="w-full h-[300px] md:h-[340px] rounded-3xl overflow-hidden border border-glass-stroke bg-transparent">
                   <Lanyard
                     position={[0, 0, 14]}
                     gravity={[0, -40, 0]}
                     fov={26}
+                    transparent
                     fallback={<div className="w-full h-full rb-lanyard-skeleton" aria-hidden="true" />}
                   />
                 </div>
@@ -784,6 +958,31 @@ function App() {
           </div>
         </section>
       </main>
+
+      <aside
+        id="global-music-player"
+        className={`rb-music-panel ${musicOpen ? 'is-open' : 'is-closed'}`}
+        aria-label="Global music player"
+        aria-hidden={!musicOpen}
+      >
+          <div className="rb-music-panel-head">
+            <p className="rb-music-panel-title">Music Player</p>
+            <button
+              type="button"
+              className="rb-music-panel-close"
+              onClick={() => setMusicOpen(false)}
+              aria-label="Close music player"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <HomeMusicPlayer
+            playRequest={musicPlayRequest}
+            onTrackChange={handleTrackTitleChange}
+            onTrackMetaChange={handleTrackMetaChange}
+            onPlaybackChange={setMusicIsPlaying}
+          />
+      </aside>
 
       <footer className="w-full py-20 bg-surface-deep border-t border-glass-stroke"><div className="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter w-full max-w-7xl mx-auto"><div className="font-headline-md text-headline-md font-bold text-on-surface">Kurnia Hary</div><p className="font-body-md text-body-md text-on-surface-variant">© 2024 Kurnia Hary Trisnandha. All rights reserved.</p><div className="flex gap-6 font-body-md text-body-md"><a className="text-on-surface-variant hover:text-secondary" href="#">Github</a><a className="text-on-surface-variant hover:text-secondary" href="#">LinkedIn</a><a className="text-on-surface-variant hover:text-secondary" href="#">Source Code</a></div></div></footer>
     </div>
