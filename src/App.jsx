@@ -66,6 +66,19 @@ const socialLinks = [
   { label: 'YouTube', href: YOUTUBE_URL, icon: 'smart_display' },
 ]
 
+const footerNavLinks = [
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
+]
+
+const footerContactLabels = new Set(['WhatsApp'])
+const footerSocialLabels = new Set(['GitHub', 'LinkedIn', 'Instagram', 'YouTube'])
+const footerQuickLinks = [
+  ...footerNavLinks,
+  ...socialLinks.filter((item) => footerSocialLabels.has(item.label)),
+  ...contactLinks.filter((item) => footerContactLabels.has(item.label)),
+]
+
 const formatCompactDate = (value) => {
   if (!value) return 'Unknown'
   return new Intl.DateTimeFormat('en', {
@@ -1102,7 +1115,27 @@ function App() {
           />
       </aside>
 
-      <footer className="w-full py-20 bg-surface-deep border-t border-glass-stroke"><div className="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter w-full max-w-7xl mx-auto"><div className="font-headline-md text-headline-md font-bold text-on-surface">Kurnia Hary</div><p className="font-body-md text-body-md text-on-surface-variant">© 2024 Kurnia Hary Trisnandha. All rights reserved.</p><div className="flex flex-wrap justify-center gap-6 font-body-md text-body-md">{socialLinks.map((item) => <a key={item.label} className="text-on-surface-variant hover:text-secondary" href={item.href} target="_blank" rel="noreferrer">{item.label}</a>)}</div></div></footer>
+      <footer className="rb-footer">
+        <div className="rb-footer-shell px-margin-mobile md:px-margin-desktop">
+          <div className="rb-footer-main">
+            <div className="rb-footer-brand">
+              <p className="rb-footer-name">Kurnia Hary Trisnandha</p>
+              <p className="rb-footer-role">Backend Developer · Surabaya, Indonesia</p>
+            </div>
+
+            <nav className="rb-footer-links" aria-label="Footer links">
+              {footerQuickLinks.map((item) => (
+                <a key={item.label} className="rb-footer-link" href={item.href} target={item.href.startsWith('#') ? undefined : '_blank'} rel={item.href.startsWith('#') ? undefined : 'noreferrer'}>{item.label}</a>
+              ))}
+            </nav>
+          </div>
+
+          <div className="rb-footer-bottom">
+            <p>© 2026 Kurnia Hary Trisnandha · Built with React + Vite</p>
+            <a href="#home">Back to top</a>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

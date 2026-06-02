@@ -103,6 +103,111 @@ body {
   isolation: isolate;
 }
 
+.rb-footer {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(173, 198, 255, 0.18);
+  background:
+    radial-gradient(70% 120% at 8% 0%, rgba(78, 222, 163, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(8, 12, 22, 0.82), #050505 78%);
+}
+
+.rb-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(78, 222, 163, 0.8), rgba(173, 198, 255, 0.7), transparent);
+}
+
+.rb-footer-shell {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 34px;
+  padding-bottom: 30px;
+}
+
+.rb-footer-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.rb-footer-name {
+  margin: 0;
+  color: #dee1f7;
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 750;
+}
+
+.rb-footer-role {
+  margin-top: 5px;
+  color: #8c909f;
+  font-size: 13px;
+}
+
+.rb-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.rb-footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 11px;
+  border-radius: 999px;
+  color: #aeb4ca;
+  font-size: 13px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.rb-footer-link:hover {
+  color: #4edea3;
+  border-color: rgba(78, 222, 163, 0.28);
+  background: rgba(78, 222, 163, 0.08);
+}
+
+.rb-footer-bottom {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(173, 198, 255, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  color: #8c909f;
+  font-size: 13px;
+}
+
+.rb-footer-bottom a {
+  color: #aeb4ca;
+  transition: color 0.2s ease;
+}
+
+.rb-footer-bottom a:hover {
+  color: #4edea3;
+}
+
+@media (max-width: 900px) {
+  .rb-footer-main {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rb-footer-links {
+    justify-content: flex-start;
+  }
+}
+
 .rb-ambient-orb {
   position: fixed;
   width: 420px;
