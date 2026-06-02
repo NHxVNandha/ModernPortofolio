@@ -11,6 +11,60 @@ const GITHUB_USERNAME = 'NHxVNandha'
 const GITHUB_REFRESH_INTERVAL = 60000
 const GITHUB_SNAKE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_USERNAME}/output/github-contribution-grid-snake-dark.svg`
 const CONTRIBUTION_YEARS_TO_SHOW = 3
+const EMAIL_ADDRESS = 'contact@kurniahary.com'
+const WHATSAPP_NUMBER = '+62 895-3950-94858'
+const WHATSAPP_URL = 'https://wa.me/62895395094858'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/kurnia-hary-trisnandha-a80240249/'
+const INSTAGRAM_URL = 'https://www.instagram.com/kurniahary8'
+const TIKTOK_URL = 'https://www.tiktok.com/@idamankleean'
+const YOUTUBE_URL = 'https://www.youtube.com/@kurniaharytz6654'
+
+const contactLinks = [
+  {
+    label: 'Email',
+    value: EMAIL_ADDRESS,
+    description: 'Best for formal inquiries, project briefs, and collaboration details.',
+    href: `mailto:${EMAIL_ADDRESS}`,
+    icon: 'alternate_email',
+    iconClass: 'text-primary',
+    iconWrapClass: 'bg-primary/10 border-primary/20 group-hover:bg-primary/20',
+  },
+  {
+    label: 'WhatsApp',
+    value: WHATSAPP_NUMBER,
+    description: 'Fast response for direct discussion and opportunity follow-ups.',
+    href: WHATSAPP_URL,
+    icon: 'chat_bubble',
+    iconClass: 'text-secondary',
+    iconWrapClass: 'bg-secondary/10 border-secondary/20 group-hover:bg-secondary/20',
+  },
+  {
+    label: 'LinkedIn',
+    value: 'Kurnia Hary Trisnandha',
+    description: 'Career profile, professional networking, and role opportunities.',
+    href: LINKEDIN_URL,
+    devicon: 'devicon-linkedin-plain',
+    iconClass: 'text-primary',
+    iconWrapClass: 'bg-primary/10 border-primary/20 group-hover:bg-primary/20',
+  },
+  {
+    label: 'GitHub',
+    value: GITHUB_USERNAME,
+    description: 'Code portfolio, repositories, and recent development activity.',
+    href: `https://github.com/${GITHUB_USERNAME}`,
+    devicon: 'devicon-github-original',
+    iconClass: 'text-secondary',
+    iconWrapClass: 'bg-secondary/10 border-secondary/20 group-hover:bg-secondary/20',
+  },
+]
+
+const socialLinks = [
+  { label: 'GitHub', href: `https://github.com/${GITHUB_USERNAME}`, devicon: 'devicon-github-original' },
+  { label: 'LinkedIn', href: LINKEDIN_URL, devicon: 'devicon-linkedin-plain' },
+  { label: 'Instagram', href: INSTAGRAM_URL, icon: 'photo_camera' },
+  { label: 'TikTok', href: TIKTOK_URL, icon: 'music_note' },
+  { label: 'YouTube', href: YOUTUBE_URL, icon: 'smart_display' },
+]
 
 const formatCompactDate = (value) => {
   if (!value) return 'Unknown'
@@ -80,6 +134,14 @@ function App() {
   const [isContactVisible, setIsContactVisible] = useState(false)
   const [githubRepos, setGithubRepos] = useState([])
   const [githubEvents, setGithubEvents] = useState([])
+  const [githubProfile, setGithubProfile] = useState({
+    name: '',
+    bio: '',
+    avatarUrl: '',
+    profileUrl: `https://github.com/${GITHUB_USERNAME}`,
+    followers: 0,
+    following: 0,
+  })
   const [githubLoading, setGithubLoading] = useState(true)
   const [githubError, setGithubError] = useState('')
   const [githubLastSync, setGithubLastSync] = useState(null)
@@ -247,24 +309,34 @@ function App() {
 
     const fetchGitHubData = async () => {
       try {
-        const [reposResponse, eventsResponse] = await Promise.all([
+        const [reposResponse, eventsResponse, profileResponse] = await Promise.all([
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=8`),
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=10`),
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
         ])
 
-        if (!reposResponse.ok || !eventsResponse.ok) {
+        if (!reposResponse.ok || !eventsResponse.ok || !profileResponse.ok) {
           throw new Error('GitHub API request failed')
         }
 
-        const [reposData, eventsData] = await Promise.all([
+        const [reposData, eventsData, profileData] = await Promise.all([
           reposResponse.json(),
           eventsResponse.json(),
+          profileResponse.json(),
         ])
 
         if (ignore) return
 
         setGithubRepos(reposData.filter((repo) => !repo.fork))
         setGithubEvents(eventsData)
+        setGithubProfile({
+          name: profileData?.name || GITHUB_USERNAME,
+          bio: profileData?.bio || '',
+          avatarUrl: profileData?.avatar_url || '',
+          profileUrl: profileData?.html_url || `https://github.com/${GITHUB_USERNAME}`,
+          followers: profileData?.followers || 0,
+          following: profileData?.following || 0,
+        })
         setGithubLastSync(new Date().toISOString())
         setGithubError('')
       } catch {
@@ -784,16 +856,41 @@ function App() {
 
         <section className="py-20 bg-surface-container rb-reveal rb-projects rb-spotlight" id="projects" onMouseMove={spotlightMove}>
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
-              <div className="relative">
-                <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">GitHub <span className="text-secondary">Projects</span></h2>
+            <div className="mb-14 grid md:grid-cols-12 gap-8 items-start">
+              <div className="relative md:col-span-12">
+                <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Github <span className="text-secondary">Integration</span></h2>
                 <div className="w-20 h-1 bg-secondary rounded-full" />
-                <p className="mt-6 text-on-surface-variant max-w-3xl font-body-md text-sm text-justify leading-relaxed">Repository data is synced directly from GitHub, so new projects, stars, forks, languages, commits, and public activity update automatically.</p>
               </div>
-              <div className="grid grid-cols-3 gap-3 min-w-full lg:min-w-[360px]">
-                <div className="github-stat-card"><span>{githubRepos.length}</span><p>Repos</p></div>
-                <div className="github-stat-card"><span>{githubStats.stars}</span><p>Stars</p></div>
-                <div className="github-stat-card"><span>{githubStats.languages.size}</span><p>Languages</p></div>
+              <div className="md:col-span-8">
+                <p className="text-on-surface-variant max-w-3xl font-body-md text-sm text-justify leading-relaxed">This GitHub integration highlights how I build and ship real software over time, not only as portfolio output but also as part of my daily professional workflow. The repositories, commit patterns, language usage, and public activity shown here are designed to give a clear view of what I am actively working on and how my technical focus evolves.</p>
+                <p className="mt-4 text-on-surface-variant max-w-3xl font-body-md text-sm text-justify leading-relaxed">In my current role as an IT Programmer at RS Husada Utama Surabaya, I handle practical healthcare system needs that require stable backend logic, maintainable code structure, and reliable data handling. Many of my implementation decisions are shaped by production demands, operational continuity, and user-facing reliability.</p>
+                <p className="mt-4 text-on-surface-variant max-w-3xl font-body-md text-sm text-justify leading-relaxed">At the same time, as a current Diploma 3 Informatics Engineering student at Politeknik Elektronika Negeri Surabaya, I continuously sharpen my engineering fundamentals through academic projects, technical exploration, and structured problem-solving. This section reflects that ongoing balance between real-world implementation and continuous learning, from feature development and optimization to experimentation, refactoring, and long-term skill growth.</p>
+              </div>
+              <div className="md:col-span-4">
+                <div className="github-mini-profile mb-3">
+                  <div className="github-mini-profile-head">
+                    <img
+                      src={githubProfile.avatarUrl || '/profile.png'}
+                      alt={`${githubProfile.name || GITHUB_USERNAME} GitHub avatar`}
+                      className="github-mini-avatar"
+                    />
+                    <div className="min-w-0">
+                      <p className="github-mini-name">{githubProfile.name || GITHUB_USERNAME}</p>
+                      <p className="github-mini-handle">@{GITHUB_USERNAME}</p>
+                    </div>
+                  </div>
+                  <p className="github-mini-bio">{githubProfile.bio || 'GitHub profile synced. Bio is not available yet.'}</p>
+                  <div className="github-mini-stats">
+                    <span>{githubProfile.followers} followers</span>
+                    <span>{githubProfile.following} following</span>
+                  </div>
+                  <a className="github-mini-link" href={githubProfile.profileUrl} target="_blank" rel="noreferrer">View GitHub Profile</a>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="github-stat-card"><span>{githubRepos.length}</span><p>Repos</p></div>
+                  <div className="github-stat-card"><span>{githubStats.stars}</span><p>Stars</p></div>
+                  <div className="github-stat-card"><span>{githubStats.languages.size}</span><p>Languages</p></div>
+                </div>
               </div>
             </div>
 
@@ -851,8 +948,9 @@ function App() {
                 <div className="lg:col-span-8 grid md:grid-cols-2 gap-bento-gap">
                   {projectRepos.map((repo, index) => {
                     const latestCommit = latestCommitByRepo[repo.name]
+                    const liveUrl = typeof repo.homepage === 'string' && repo.homepage.trim() ? repo.homepage.trim() : ''
                     return (
-                      <a key={repo.id} className={`github-project-card rb-target-card ${index === 0 ? 'md:col-span-2' : ''}`} href={repo.html_url} target="_blank" rel="noreferrer">
+                      <article key={repo.id} className={`github-project-card rb-target-card ${index === 0 ? 'md:col-span-2' : ''}`}>
                         <div className="flex items-start justify-between gap-4 mb-6">
                           <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center shrink-0"><i className="devicon-github-original text-primary text-2xl" /></div>
                           <span className="font-label-code text-xs text-on-surface-variant">Updated {formatRelativeTime(repo.updated_at)}</span>
@@ -866,7 +964,17 @@ function App() {
                           <span className="github-chip"><span className="material-symbols-outlined text-sm">calendar_month</span>{formatCompactDate(repo.created_at)}</span>
                         </div>
                         {latestCommit ? <div className="github-commit-line"><span className="material-symbols-outlined text-secondary text-base">commit</span><span>{latestCommit.message}</span></div> : null}
-                      </a>
+                        <div className="github-project-actions">
+                          {liveUrl ? (
+                            <a className="github-project-action is-primary" href={liveUrl} target="_blank" rel="noreferrer">
+                              View Live
+                            </a>
+                          ) : (
+                            <span className="github-project-action is-disabled" aria-disabled="true">No Live Demo</span>
+                          )}
+                          <a className="github-project-action is-secondary" href={repo.html_url} target="_blank" rel="noreferrer">GitHub</a>
+                        </div>
+                      </article>
                     )
                   })}
                 </div>
@@ -903,47 +1011,56 @@ function App() {
             >
             <div ref={contactBorderRef} className="glass-card p-8 md:p-12 rounded-lg w-full border-t-4 border-t-primary mx-auto text-left">
               <div className="text-center mb-10">
+                <p className="font-label-code text-xs uppercase tracking-[0.28em] text-secondary mb-3">Professional Contact</p>
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Let's <span className="text-primary">Collaborate</span></h2>
-                <p className="text-on-surface-variant max-w-3xl mx-auto">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                <p className="text-on-surface-variant max-w-3xl mx-auto leading-relaxed">Open for backend development, web application projects, system integration, internships, freelance work, and professional opportunities. Use the channels below for clear, direct communication.</p>
               </div>
-              <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
-                <div className="md:pt-1">
-                  <div className="grid grid-cols-1 gap-4 text-left mb-8">
-                    <a className="flex items-center gap-4 group" href="mailto:contact@kurniahary.com">
-                      <div className="w-14 h-14 rounded-xl bg-surface-container border border-glass-stroke flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all shadow-md">
-                        <span className="material-symbols-outlined text-primary text-3xl">alternate_email</span>
-                      </div>
-                      <div>
-                        <p className="text-xs text-on-surface-variant font-label-code">Email Me</p>
-                        <p className="font-bold break-all">contact@kurniahary.com</p>
-                      </div>
-                    </a>
-
-                    <a className="flex items-center gap-4 group" href="#">
-                      <div className="w-14 h-14 rounded-xl bg-surface-container border border-glass-stroke flex items-center justify-center group-hover:bg-secondary/20 group-hover:scale-110 transition-all shadow-md">
-                        <span className="material-symbols-outlined text-secondary text-3xl">chat_bubble</span>
-                      </div>
-                      <div>
-                        <p className="text-xs text-on-surface-variant font-label-code">WhatsApp</p>
-                        <p className="font-bold">+62 822 XXX XXX</p>
-                      </div>
-                    </a>
+              <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 md:gap-10 items-start">
+                <div>
+                  <div className="grid sm:grid-cols-2 gap-4 text-left mb-8">
+                    {contactLinks.map((item) => (
+                      <a key={item.label} className="group rounded-3xl border border-glass-stroke bg-surface-container/50 p-5 transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-surface-container-high" href={item.href} target={item.href.startsWith('mailto:') ? undefined : '_blank'} rel={item.href.startsWith('mailto:') ? undefined : 'noreferrer'}>
+                        <div className="flex items-start gap-4">
+                          <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0 transition-colors ${item.iconWrapClass}`}>
+                            {item.devicon ? <i className={`${item.devicon} ${item.iconClass} text-2xl`} /> : <span className={`material-symbols-outlined ${item.iconClass} text-2xl`}>{item.icon}</span>}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-xs text-on-surface-variant font-label-code uppercase tracking-[0.16em]">{item.label}</p>
+                            <p className="font-bold break-words mt-1">{item.value}</p>
+                            <p className="text-sm text-on-surface-variant leading-relaxed mt-2">{item.description}</p>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
                   </div>
 
-                  <div className="flex gap-6">
-                    <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#" aria-label="GitHub">
-                      <i className="devicon-github-original text-2xl" />
-                    </a>
-                    <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#" aria-label="LinkedIn">
-                      <i className="devicon-linkedin-plain text-2xl" />
-                    </a>
-                    <a className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href="#" aria-label="Portfolio">
-                      <span className="material-symbols-outlined text-2xl">person_search</span>
-                    </a>
+                  <div className="rounded-3xl border border-glass-stroke bg-surface-container/35 p-5 text-left">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                      <div>
+                        <p className="font-label-code text-xs uppercase tracking-[0.22em] text-secondary mb-2">Social Presence</p>
+                        <p className="text-on-surface-variant text-sm leading-relaxed">Public channels for updates, learning content, and development activity.</p>
+                      </div>
+                      <div className="flex flex-wrap gap-3">
+                        {socialLinks.map((item) => (
+                          <a key={item.label} className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke hover:bg-primary hover:text-on-primary hover:scale-110 transition-all shadow-lg" href={item.href} target="_blank" rel="noreferrer" aria-label={item.label} title={item.label}>
+                            {item.devicon ? <i className={`${item.devicon} text-2xl`} /> : <span className="material-symbols-outlined text-2xl">{item.icon}</span>}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="w-full h-[300px] md:h-[340px] rounded-3xl overflow-hidden border border-glass-stroke bg-transparent">
+                <div className="space-y-5">
+                  <div className="rounded-3xl border border-glass-stroke bg-surface-container/40 p-6 text-left">
+                    <p className="font-label-code text-xs uppercase tracking-[0.22em] text-primary mb-4">Availability</p>
+                    <div className="space-y-4 text-sm text-on-surface-variant">
+                      <div className="flex gap-3"><span className="material-symbols-outlined text-secondary text-xl">verified</span><span>Open to professional opportunities and project-based collaboration.</span></div>
+                      <div className="flex gap-3"><span className="material-symbols-outlined text-secondary text-xl">mail</span><span>Prefer email for formal briefs, requirements, and documentation.</span></div>
+                      <div className="flex gap-3"><span className="material-symbols-outlined text-secondary text-xl">forum</span><span>Use WhatsApp for quick discussion or scheduling a follow-up.</span></div>
+                    </div>
+                  </div>
+                  <div className="w-full h-[300px] md:h-[340px] rounded-3xl overflow-hidden border border-glass-stroke bg-transparent">
                   <Lanyard
                     position={[0, 0, 14]}
                     gravity={[0, -40, 0]}
@@ -951,6 +1068,7 @@ function App() {
                     transparent
                     fallback={<div className="w-full h-full rb-lanyard-skeleton" aria-hidden="true" />}
                   />
+                  </div>
                 </div>
               </div>
             </div>
@@ -984,7 +1102,7 @@ function App() {
           />
       </aside>
 
-      <footer className="w-full py-20 bg-surface-deep border-t border-glass-stroke"><div className="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter w-full max-w-7xl mx-auto"><div className="font-headline-md text-headline-md font-bold text-on-surface">Kurnia Hary</div><p className="font-body-md text-body-md text-on-surface-variant">© 2024 Kurnia Hary Trisnandha. All rights reserved.</p><div className="flex gap-6 font-body-md text-body-md"><a className="text-on-surface-variant hover:text-secondary" href="#">Github</a><a className="text-on-surface-variant hover:text-secondary" href="#">LinkedIn</a><a className="text-on-surface-variant hover:text-secondary" href="#">Source Code</a></div></div></footer>
+      <footer className="w-full py-20 bg-surface-deep border-t border-glass-stroke"><div className="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter w-full max-w-7xl mx-auto"><div className="font-headline-md text-headline-md font-bold text-on-surface">Kurnia Hary</div><p className="font-body-md text-body-md text-on-surface-variant">© 2024 Kurnia Hary Trisnandha. All rights reserved.</p><div className="flex flex-wrap justify-center gap-6 font-body-md text-body-md">{socialLinks.map((item) => <a key={item.label} className="text-on-surface-variant hover:text-secondary" href={item.href} target="_blank" rel="noreferrer">{item.label}</a>)}</div></div></footer>
     </div>
   )
 }
