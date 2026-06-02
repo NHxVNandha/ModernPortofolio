@@ -79,6 +79,99 @@ const footerQuickLinks = [
   ...contactLinks.filter((item) => footerContactLabels.has(item.label)),
 ]
 
+const certifications = [
+  {
+    title: 'Introduction to Artificial Intelligence',
+    issuer: 'Pijak in collaboration with IBM SkillsBuild',
+    issued: 'Mei 2026',
+    credentialId: 'ALM-COURSE_4058918',
+    icon: 'psychology',
+    toneClass: 'text-primary',
+    iconBgClass: 'rb-cert-icon-primary',
+    dotClass: 'rb-cert-dot-primary',
+  },
+  {
+    title: 'CSS (Basic)',
+    issuer: 'HackerRank',
+    issued: 'Nov 2025',
+    credentialId: '613722766A22',
+    devicon: 'devicon-css3-plain',
+    toneClass: 'text-primary',
+    iconBgClass: 'rb-cert-icon-primary',
+    dotClass: 'rb-cert-dot-primary',
+  },
+  {
+    title: 'SQL (Basic)',
+    issuer: 'HackerRank',
+    issued: 'Nov 2025',
+    credentialId: 'ID022DDDAD4DEO',
+    icon: 'database',
+    toneClass: 'text-tertiary',
+    iconBgClass: 'rb-cert-icon-tertiary',
+    dotClass: 'rb-cert-dot-tertiary',
+  },
+  {
+    title: 'Belajar Dasar Pemrograman JavaScript',
+    issuer: 'Dicoding Indonesia',
+    issued: 'Okt 2024',
+    expires: 'Okt 2027',
+    credentialId: '1OP84WYMQZQK',
+    devicon: 'devicon-javascript-plain',
+    toneClass: 'text-tertiary',
+    iconBgClass: 'rb-cert-icon-tertiary',
+    dotClass: 'rb-cert-dot-tertiary',
+  },
+  {
+    title: 'Merancang dan Mengelola Jaringan Komputer',
+    issuer: 'Cybers Academy',
+    issued: 'Agu 2023',
+    credentialId: 'BL2318LKCN8GINV/45142/16',
+    icon: 'hub',
+    toneClass: 'text-secondary',
+    iconBgClass: 'rb-cert-icon-secondary',
+    dotClass: 'rb-cert-dot-secondary',
+  },
+  {
+    title: 'Dasar-Dasar Dukungan Teknis',
+    issuer: 'Coursera',
+    issued: 'Okt 2022',
+    credentialId: 'ATNQ4DN4FC4K',
+    icon: 'support_agent',
+    toneClass: 'text-primary',
+    iconBgClass: 'rb-cert-icon-primary',
+    dotClass: 'rb-cert-dot-primary',
+  },
+  {
+    title: 'Work In Tech Soft Skills Training',
+    issuer: 'QED Research Consulting',
+    issued: 'Sep 2022',
+    icon: 'groups',
+    toneClass: 'text-secondary',
+    iconBgClass: 'rb-cert-icon-secondary',
+    dotClass: 'rb-cert-dot-secondary',
+  },
+  {
+    title: 'Digital Marketing Certified',
+    issuer: 'Badan Nasional Sertifikasi Profesi (BNSP)',
+    issued: 'Jan 2022',
+    expires: 'Jan 2025',
+    credentialId: '62090 2431 0 0016041 2022',
+    icon: 'verified',
+    toneClass: 'text-secondary',
+    iconBgClass: 'rb-cert-icon-secondary',
+    dotClass: 'rb-cert-dot-secondary',
+  },
+  {
+    title: 'IT Network System Administration',
+    issuer: 'LKS SMK',
+    issued: 'Mar 2021',
+    icon: 'router',
+    toneClass: 'text-tertiary',
+    iconBgClass: 'rb-cert-icon-tertiary',
+    dotClass: 'rb-cert-dot-tertiary',
+  },
+]
+
 const formatCompactDate = (value) => {
   if (!value) return 'Unknown'
   return new Intl.DateTimeFormat('en', {
@@ -833,33 +926,28 @@ function App() {
                   <div className="mb-12">
                     <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Certifications</h2>
                     <div className="w-20 h-1 bg-secondary rounded-full" />
-                    <p className="mt-6 text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Professional certifications that validate hands-on capability in digital marketing, technical support, backend development, database systems, and network infrastructure.</p>
+                    <p className="mt-6 text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Licenses and certifications that validate practical capability across artificial intelligence, web fundamentals, database systems, technical support, networking, digital marketing, and professional work readiness.</p>
                   </div>
-                  <div className="relative border-l-2 border-glass-stroke ml-4">
-                    <div className="mb-6 relative">
-                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-secondary rounded-full ring-4 ring-secondary/20" />
-                      <div className="pl-12">
-                        <div className="glass-card p-6 rounded-lg flex gap-6 items-center hover:bg-surface-container-high transition-colors rb-target-card rb-target-cert"><div className="w-14 h-14 rounded-xl bg-white/5 border border-glass-stroke flex items-center justify-center shrink-0"><span className="material-symbols-outlined text-secondary text-3xl">verified</span></div><div><h4 className="font-body-lg font-bold">BNSP - Digital Marketing</h4><p className="text-on-surface-variant text-sm">Professional certification in digital strategy and market analysis.</p></div></div>
+                  <div className="rb-cert-timeline">
+                    {certifications.map((cert) => (
+                      <div key={`${cert.title}-${cert.issued}`} className="rb-cert-item">
+                        <span className={`rb-cert-dot ${cert.dotClass}`} aria-hidden="true" />
+                        <article className="rb-cert-card rb-target-card rb-target-cert">
+                          <div className={`rb-cert-icon ${cert.iconBgClass}`}>
+                            {cert.devicon ? <i className={`${cert.devicon} ${cert.toneClass}`} /> : <span className={`material-symbols-outlined ${cert.toneClass}`}>{cert.icon}</span>}
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="rb-cert-title">{cert.title}</h4>
+                            <p className="rb-cert-issuer">{cert.issuer}</p>
+                            <div className="rb-cert-meta">
+                              <span>Diterbitkan {cert.issued}</span>
+                              {cert.expires ? <span>Berakhir {cert.expires}</span> : null}
+                            </div>
+                            {cert.credentialId ? <p className="rb-cert-id">ID Kredensial <span>{cert.credentialId}</span></p> : null}
+                          </div>
+                        </article>
                       </div>
-                    </div>
-                    <div className="mb-6 relative">
-                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-primary rounded-full ring-4 ring-primary/20" />
-                      <div className="pl-12">
-                        <div className="glass-card p-6 rounded-lg flex gap-6 items-center hover:bg-surface-container-high transition-colors rb-target-card rb-target-cert"><div className="w-14 h-14 rounded-xl bg-white/5 border border-glass-stroke flex items-center justify-center shrink-0"><i className="devicon-google-plain text-3xl text-secondary" /></div><div><h4 className="font-body-lg font-bold">Google Technical Support</h4><p className="text-on-surface-variant text-sm">Coursera IT Support Professional Certificate covering troubleshooting.</p></div></div>
-                      </div>
-                    </div>
-                    <div className="mb-6 relative">
-                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-tertiary rounded-full ring-4 ring-tertiary/20" />
-                      <div className="pl-12">
-                        <div className="glass-card p-6 rounded-lg flex gap-6 items-center hover:bg-surface-container-high transition-colors rb-target-card rb-target-cert"><div className="w-14 h-14 rounded-xl bg-white/5 border border-glass-stroke flex items-center justify-center shrink-0"><i className="devicon-linkedin-plain text-3xl text-secondary" /></div><div><h4 className="font-body-lg font-bold">LinkedIn Learning Path</h4><p className="text-on-surface-variant text-sm">Advanced training in ASP.NET Core and SQL Server.</p></div></div>
-                      </div>
-                    </div>
-                    <div className="mb-2 relative">
-                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-secondary rounded-full ring-4 ring-secondary/20" />
-                      <div className="pl-12">
-                        <div className="glass-card p-6 rounded-lg flex gap-6 items-center hover:bg-surface-container-high transition-colors rb-target-card rb-target-cert"><div className="w-14 h-14 rounded-xl bg-white/5 border border-glass-stroke flex items-center justify-center shrink-0"><span className="material-symbols-outlined text-secondary text-3xl">router</span></div><div><h4 className="font-body-lg font-bold">MTCNA & Cisco Networking</h4><p className="text-on-surface-variant text-sm">Proficiency in Mikrotik and Cisco routing standards.</p></div></div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
