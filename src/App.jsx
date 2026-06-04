@@ -6,6 +6,7 @@ import Dock from './components/Dock.jsx'
 import Lanyard from './components/Lanyard.jsx'
 import GitHubCommitChart from './components/GitHubCommitChart.jsx'
 import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
+import LiveSiteMetrics from './components/LiveSiteMetrics.jsx'
 import stitchProjects from './data/stitchProjects.json'
 
 const GITHUB_USERNAME = 'NHxVNandha'
@@ -69,6 +70,7 @@ const socialLinks = [
 
 const footerNavLinks = [
   { label: 'Projects', href: '#projects' },
+  { label: 'Metrics', href: '#site-metrics' },
   { label: 'Stitch', href: '#stitch' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -290,7 +292,7 @@ function App() {
   ]
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'stitch', 'contact']
+    const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'site-metrics', 'stitch', 'contact']
     const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
     const dockSections = ['home', 'skills', 'education', 'projects', 'contact'].map((id) => document.getElementById(id)).filter(Boolean)
 
@@ -629,6 +631,7 @@ function App() {
             <a className={navClass('skills')} href="#skills">Skills</a>
             <a className={navClass('experience')} href="#experience">Experience</a>
             <a className={navClass('projects')} href="#projects">Projects</a>
+            <a className={navClass('site-metrics')} href="#site-metrics">Metrics</a>
             <a className={navClass('stitch')} href="#stitch">Stitch</a>
             <a className={navClass('contact')} href="#contact">Contact</a>
           </div>
@@ -662,6 +665,7 @@ function App() {
               <a className={activeSection === 'skills' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
               <a className={activeSection === 'experience' || activeSection === 'education' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
               <a className={activeSection === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+              <a className={activeSection === 'site-metrics' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#site-metrics" onClick={() => setMenuOpen(false)}>Metrics</a>
               <a className={activeSection === 'stitch' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#stitch" onClick={() => setMenuOpen(false)}>Stitch</a>
               <a className={activeSection === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
               <button className="mt-2 bg-primary text-on-primary px-6 py-3 rounded-full font-bold w-full">Resume</button>
@@ -1103,6 +1107,22 @@ function App() {
             ) : (
               <div className="github-empty-state">No public repositories found for {GITHUB_USERNAME}.</div>
             )}
+          </div>
+        </section>
+
+
+        <section className="py-20 bg-surface rb-reveal rb-metrics" id="site-metrics">
+          <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+            <div className="metrics-section-head">
+              <div>
+                <p className="font-label-code text-xs uppercase tracking-[0.28em] text-secondary mb-3">Live Site Telemetry</p>
+                <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Performance <span className="text-secondary">Metrics</span></h2>
+                <div className="w-20 h-1 bg-secondary rounded-full" />
+                <p className="mt-6 text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Realtime portfolio health and visitor telemetry powered by Neon, browser Web Vitals, and Vercel serverless APIs. The traffic counter uses anonymous sessions only and avoids storing raw visitor IP addresses.</p>
+              </div>
+              <span className="metrics-section-badge"><i /> Live telemetry</span>
+            </div>
+            <LiveSiteMetrics />
           </div>
         </section>
 
