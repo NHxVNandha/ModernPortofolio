@@ -1,17 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Modern Portfolio favicon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="N. favicon">
   <defs>
-    <linearGradient id="bg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="9" y1="8" x2="55" y2="56" gradientUnits="userSpaceOnUse">
       <stop stop-color="#adc6ff" />
-      <stop offset="0.56" stop-color="#4edea3" />
-      <stop offset="1" stop-color="#ffb786" />
+      <stop offset="0.62" stop-color="#4edea3" />
+      <stop offset="1" stop-color="#ffb786" stop-opacity="0.92" />
     </linearGradient>
-    <linearGradient id="mark" x1="18" y1="16" x2="46" y2="48" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ffffff" />
-      <stop offset="1" stop-color="#d8e2ff" />
-    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
   <rect width="64" height="64" rx="18" fill="#050505" />
-  <rect x="5" y="5" width="54" height="54" rx="15" fill="url(#bg)" opacity="0.18" />
-  <path d="M18 45V19h8.4L32 33.5 37.6 19H46v26h-6.6V29.8L34.7 45h-5.4l-4.7-15.2V45H18Z" fill="url(#mark)" />
-  <path d="M12 49h40" stroke="#4edea3" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+  <rect x="5" y="5" width="54" height="54" rx="15" fill="url(#bg)" opacity="0.16" />
+  <rect x="7" y="7" width="50" height="50" rx="14" fill="none" stroke="url(#bg)" stroke-width="2" opacity="0.84" />
+  <text x="12" y="44" fill="#f7fbff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-2" filter="url(#glow)">N</text>
+  <circle cx="48" cy="43" r="4" fill="#4edea3" />
 </svg>
