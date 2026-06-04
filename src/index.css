@@ -105,6 +105,32 @@ html,
 }
 
 @media (max-width: 640px) {
+  .rb-profile-panel {
+    padding: 0 !important;
+  }
+
+  .rb-profile-copy p {
+    margin-top: 1rem;
+  }
+
+  .rb-profile-story-panel {
+    gap: 1rem;
+  }
+
+  .rb-profile-mini-stat {
+    padding: 0.85rem !important;
+  }
+
+  .rb-profile-mini-stat > div {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .rb-arsenal-panel > div:first-child {
+    margin-bottom: 1.25rem;
+  }
+
   .rb-arsenal-grid .arsenal-card {
     padding: 1rem;
   }
