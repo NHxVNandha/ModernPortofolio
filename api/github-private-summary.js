@@ -59,6 +59,8 @@ const query = `
 `
 
 export default async function handler(_req, res) {
+  res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate=3600')
+
   const token = process.env.GITHUB_TOKEN || readEnvLocalValue('GITHUB_TOKEN')
   const username = process.env.GITHUB_USERNAME || readEnvLocalValue('GITHUB_USERNAME') || 'NHxVNandha'
   const parsedYear = Number.parseInt(_req.query?.year, 10)

@@ -9,7 +9,7 @@ import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
 import stitchProjects from './data/stitchProjects.json'
 
 const GITHUB_USERNAME = 'NHxVNandha'
-const GITHUB_REFRESH_INTERVAL = 60000
+const GITHUB_REFRESH_INTERVAL = 30 * 60 * 1000
 const GITHUB_SNAKE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_USERNAME}/output/github-contribution-grid-snake-dark.svg`
 const CONTRIBUTION_YEARS_TO_SHOW = 3
 const EMAIL_ADDRESS = 'contact@kurniahary.com'
