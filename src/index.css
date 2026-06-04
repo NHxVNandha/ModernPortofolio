@@ -452,6 +452,20 @@ body {
   transform: translateY(0);
 }
 
+@media (max-width: 767px) {
+  .mobile-view-hidden {
+    display: none !important;
+  }
+
+  .mobile-view-active,
+  .mobile-view-active.rb-reveal,
+  .mobile-view-active .rb-reveal {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .rb-home.is-visible {
   animation: home-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }

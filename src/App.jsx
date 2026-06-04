@@ -21,6 +21,28 @@ const INSTAGRAM_URL = 'https://www.instagram.com/kurniahary8'
 const TIKTOK_URL = 'https://www.tiktok.com/@idamankleean'
 const YOUTUBE_URL = 'https://www.youtube.com/@kurniaharytz6654'
 
+const mobileViewByHash = {
+  home: 'home',
+  about: 'profile',
+  skills: 'profile',
+  experience: 'journey',
+  education: 'journey',
+  projects: 'projects',
+  'site-metrics': 'metrics',
+  stitch: 'stitch',
+  contact: 'contact',
+}
+
+const mobileViewPrimarySection = {
+  home: 'home',
+  profile: 'skills',
+  journey: 'experience',
+  projects: 'projects',
+  metrics: 'site-metrics',
+  stitch: 'stitch',
+  contact: 'contact',
+}
+
 const contactLinks = [
   {
     label: 'Email',
@@ -240,7 +262,7 @@ function App() {
   })
   const [musicIsPlaying, setMusicIsPlaying] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
-  const [activeDockSection, setActiveDockSection] = useState('home')
+  const [activeMobileView, setActiveMobileView] = useState('home')
   const [isContactVisible, setIsContactVisible] = useState(false)
   const [selectedStitchSlug, setSelectedStitchSlug] = useState(stitchProjects[0]?.slug || '')
   const [githubRepos, setGithubRepos] = useState([])
@@ -294,12 +316,10 @@ function App() {
   useEffect(() => {
     const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'site-metrics', 'stitch', 'contact']
     const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
-    const dockSections = ['home', 'skills', 'education', 'projects', 'contact'].map((id) => document.getElementById(id)).filter(Boolean)
 
     const updateActiveSection = () => {
       const viewportAnchor = window.scrollY + window.innerHeight * 0.33
       let currentId = 'home'
-      let currentDockId = 'home'
 
       sections.forEach((section) => {
         const sectionTop = section.getBoundingClientRect().top + window.scrollY
@@ -308,15 +328,7 @@ function App() {
         }
       })
 
-      dockSections.forEach((section) => {
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY
-        if (sectionTop <= viewportAnchor) {
-          currentDockId = section.id
-        }
-      })
-
       setActiveSection((prev) => (prev === currentId ? prev : currentId))
-      setActiveDockSection((prev) => (prev === currentDockId ? prev : currentDockId))
     }
 
     updateActiveSection()
@@ -327,6 +339,20 @@ function App() {
       window.removeEventListener('scroll', updateActiveSection)
       window.removeEventListener('resize', updateActiveSection)
     }
+  }, [])
+
+  useEffect(() => {
+    const syncMobileViewFromHash = () => {
+      const hashId = window.location.hash.replace('#', '')
+      const nextView = mobileViewByHash[hashId] || 'home'
+      const sectionId = mobileViewPrimarySection[nextView] || 'home'
+      setActiveMobileView(nextView)
+      setActiveSection(sectionId)
+    }
+
+    syncMobileViewFromHash()
+    window.addEventListener('hashchange', syncMobileViewFromHash)
+    return () => window.removeEventListener('hashchange', syncMobileViewFromHash)
   }, [])
 
   useEffect(() => {
@@ -527,17 +553,23 @@ function App() {
       : 'text-on-surface-variant hover:text-primary transition-all duration-300'
   }
 
-  const jumpTo = (id) => {
+  const mobileViewClass = (view, baseClass) => `${baseClass} mobile-view-panel ${activeMobileView === view ? 'mobile-view-active' : 'mobile-view-hidden'}`
+
+  const showMobileView = (view) => {
+    const sectionId = mobileViewPrimarySection[view] || 'home'
     setMenuOpen(false)
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setActiveMobileView(view)
+    setActiveSection(sectionId)
+    window.history.pushState(null, '', `#${sectionId}`)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const mobileDockItems = [
-    { icon: <span className="material-symbols-outlined text-[20px]">home</span>, label: 'Home', onClick: () => jumpTo('home'), className: activeDockSection === 'home' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">auto_awesome</span>, label: 'Skills', onClick: () => jumpTo('skills'), className: activeDockSection === 'skills' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">school</span>, label: 'Education', onClick: () => jumpTo('education'), className: activeDockSection === 'education' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">work</span>, label: 'Projects', onClick: () => jumpTo('projects'), className: activeDockSection === 'projects' ? 'rb-dock-active' : '' },
-    { icon: <span className="material-symbols-outlined text-[20px]">mail</span>, label: 'Contact', onClick: () => jumpTo('contact'), className: activeDockSection === 'contact' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">home</span>, label: 'Home', onClick: () => showMobileView('home'), className: activeMobileView === 'home' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">auto_awesome</span>, label: 'Profile', onClick: () => showMobileView('profile'), className: activeMobileView === 'profile' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">school</span>, label: 'Journey', onClick: () => showMobileView('journey'), className: activeMobileView === 'journey' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">work</span>, label: 'Projects', onClick: () => showMobileView('projects'), className: activeMobileView === 'projects' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">mail</span>, label: 'Contact', onClick: () => showMobileView('contact'), className: activeMobileView === 'contact' ? 'rb-dock-active' : '' },
   ]
 
   const projectRepos = githubRepos.slice(0, 6)
@@ -623,7 +655,17 @@ function App() {
       <div className="rb-ambient-orb rb-ambient-b" />
       <nav className="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-[20px] border-b border-glass-stroke h-20">
         <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-full max-w-7xl mx-auto">
-          <a className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-glass-stroke bg-surface-container-low/70 p-1.5 transition-transform duration-300 hover:scale-105" href="#home" aria-label="Kurnia Hary home">
+          <a
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-glass-stroke bg-surface-container-low/70 p-1.5 transition-transform duration-300 hover:scale-105"
+            href="#home"
+            aria-label="Kurnia Hary home"
+            onClick={(event) => {
+              if (window.innerWidth < 768) {
+                event.preventDefault()
+                showMobileView('home')
+              }
+            }}
+          >
             <img className="h-full w-full" src="/favicon.svg" alt="" aria-hidden="true" />
           </a>
           <div className="hidden md:flex items-center gap-gutter font-body-md text-body-md">
@@ -661,13 +703,13 @@ function App() {
         {menuOpen ? (
           <div className="md:hidden border-t border-glass-stroke bg-surface/95 backdrop-blur-[20px]">
             <div className="px-margin-mobile py-4 flex flex-col gap-3 font-body-md">
-              <a className={activeSection === 'home' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#home" onClick={() => setMenuOpen(false)}>Home</a>
-              <a className={activeSection === 'skills' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
-              <a className={activeSection === 'experience' || activeSection === 'education' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
-              <a className={activeSection === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
-              <a className={activeSection === 'site-metrics' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#site-metrics" onClick={() => setMenuOpen(false)}>Metrics</a>
-              <a className={activeSection === 'stitch' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#stitch" onClick={() => setMenuOpen(false)}>Stitch</a>
-              <a className={activeSection === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+              <button type="button" className={`text-left ${activeMobileView === 'home' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('home')}>Home</button>
+              <button type="button" className={`text-left ${activeMobileView === 'profile' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('profile')}>Profile</button>
+              <button type="button" className={`text-left ${activeMobileView === 'journey' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('journey')}>Journey</button>
+              <button type="button" className={`text-left ${activeMobileView === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('projects')}>Projects</button>
+              <button type="button" className={`text-left ${activeMobileView === 'metrics' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('metrics')}>Metrics</button>
+              <button type="button" className={`text-left ${activeMobileView === 'stitch' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('stitch')}>Stitch</button>
+              <button type="button" className={`text-left ${activeMobileView === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('contact')}>Contact</button>
               <button className="mt-2 bg-primary text-on-primary px-6 py-3 rounded-full font-bold w-full">Resume</button>
             </div>
           </div>
@@ -702,7 +744,7 @@ function App() {
       ) : null}
 
       <main className="pt-20 pb-28 md:pb-0">
-        <section className="min-h-[calc(100svh-5rem)] md:min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-10 pb-8 md:py-20 overflow-x-clip rb-reveal rb-home" id="home">
+        <section className={mobileViewClass('home', 'min-h-[calc(100svh-5rem)] md:min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-10 pb-8 md:py-20 overflow-x-clip rb-reveal rb-home')} id="home">
           <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
             <div className="space-y-6 md:-mt-6 rb-profile-card">
               <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-code text-label-code">
@@ -766,7 +808,7 @@ function App() {
           </div>
         </section>
 
-        <section className="pt-8 pb-14 md:py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto scroll-mt-24" id="skills">
+        <section className={mobileViewClass('profile', 'pt-8 pb-14 md:py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto scroll-mt-24')} id="skills">
           <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
             <div className="rb-reveal rb-about" id="about">
               <div className="glass-card p-8 rounded-lg grid gap-bento-gap">
@@ -809,7 +851,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto rb-reveal rb-experience" id="experience">
+        <section className={mobileViewClass('journey', 'py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto rb-reveal rb-experience')} id="experience">
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="order-2">
               <div className="mb-12">
@@ -968,7 +1010,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-20 bg-surface-container rb-reveal rb-projects rb-spotlight" id="projects" onMouseMove={spotlightMove}>
+        <section className={mobileViewClass('projects', 'py-20 bg-surface-container rb-reveal rb-projects rb-spotlight')} id="projects" onMouseMove={spotlightMove}>
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
             <div className="mb-14 grid md:grid-cols-12 gap-8 items-start">
               <div className="relative md:col-span-12">
@@ -1111,7 +1153,7 @@ function App() {
         </section>
 
 
-        <section className="py-20 bg-surface rb-reveal rb-metrics" id="site-metrics">
+        <section className={mobileViewClass('metrics', 'py-20 bg-surface rb-reveal rb-metrics')} id="site-metrics">
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
             <div className="metrics-section-head">
               <div>
@@ -1127,7 +1169,7 @@ function App() {
         </section>
 
 
-        <section className="py-20 bg-surface-deep rb-reveal" id="stitch">
+        <section className={mobileViewClass('stitch', 'py-20 bg-surface-deep rb-reveal')} id="stitch">
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
             <div className="stitch-section-head">
               <div>
@@ -1199,7 +1241,7 @@ function App() {
 
 
 
-        <section className="py-20 bg-surface-deep rb-reveal rb-contact" id="contact">
+        <section className={mobileViewClass('contact', 'py-20 bg-surface-deep rb-reveal rb-contact')} id="contact">
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto text-center">
             <ElectricBorder
               color="#4edea3"
