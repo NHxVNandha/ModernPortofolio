@@ -59,7 +59,9 @@ const query = `
 `
 
 export default async function handler(_req, res) {
-  res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate=3600')
+  res.setHeader('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=3600')
+  res.setHeader('CDN-Cache-Control', 'public, max-age=1800')
+  res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=1800')
 
   const token = process.env.GITHUB_TOKEN || readEnvLocalValue('GITHUB_TOKEN')
   const username = process.env.GITHUB_USERNAME || readEnvLocalValue('GITHUB_USERNAME') || 'NHxVNandha'
