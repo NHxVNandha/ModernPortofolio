@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const tracks = [
   {
@@ -68,6 +68,16 @@ export default function HomeMusicPlayer({ playRequest = 0, onTrackChange, onTrac
   const activeTrack = useMemo(() => tracks.find((track) => track.id === activeTrackId) || tracks[0], [activeTrackId])
   const progress = duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0
 
+  const play = useCallback(async () => {
+    if (!audioRef.current) return
+    try {
+      await audioRef.current.play()
+      setIsPlaying(true)
+    } catch {
+      setIsPlaying(false)
+    }
+  }, [])
+
   useEffect(() => {
     onTrackChange?.(activeTrack.title)
     onTrackMetaChange?.({
@@ -84,27 +94,20 @@ export default function HomeMusicPlayer({ playRequest = 0, onTrackChange, onTrac
   useEffect(() => {
     if (playRequest === 0) return
 
-    const startTrack = tracks[0]
-    setActiveTrackId(startTrack.id)
-    setCurrentTime(0)
+    const timeoutId = window.setTimeout(() => {
+      const startTrack = tracks[0]
+      setActiveTrackId(startTrack.id)
+      setCurrentTime(0)
 
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0
-    }
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0
+      }
 
-    play()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playRequest])
+      play()
+    }, 0)
 
-  const play = async () => {
-    if (!audioRef.current) return
-    try {
-      await audioRef.current.play()
-      setIsPlaying(true)
-    } catch {
-      setIsPlaying(false)
-    }
-  }
+    return () => window.clearTimeout(timeoutId)
+  }, [playRequest, play])
 
   const pause = () => {
     if (!audioRef.current) return

@@ -1,4 +1,3 @@
-/* global process */
 import { createHash } from 'node:crypto'
 import { neon } from '@neondatabase/serverless'
 

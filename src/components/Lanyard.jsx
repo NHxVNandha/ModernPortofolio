@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unknown-property */
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, extend, useFrame } from '@react-three/fiber'
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei'
 import {
@@ -104,11 +103,19 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
   const { nodes, materials } = useGLTF(cardGLB)
   const texture = useTexture(lanyardTexture)
   const profileMap = useTexture(profileTexture)
-  const [cardTexture, setCardTexture] = useState(null)
 
-  const [curve] = useState(
-    () => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]),
-  )
+  const curve = useMemo(() => {
+    const nextCurve = new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
+    nextCurve.curveType = 'chordal'
+    return nextCurve
+  }, [])
+  const bandTexture = useMemo(() => {
+    const nextTexture = texture.clone()
+    nextTexture.wrapS = THREE.RepeatWrapping
+    nextTexture.wrapT = THREE.RepeatWrapping
+    nextTexture.needsUpdate = true
+    return nextTexture
+  }, [texture])
   const [dragged, drag] = useState(false)
   const [hovered, hover] = useState(false)
 
@@ -127,8 +134,8 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
     return undefined
   }, [hovered, dragged])
 
-  useEffect(() => {
-    if (!profileMap?.image) return undefined
+  const cardTexture = useMemo(() => {
+    if (!profileMap?.image) return null
 
     const cardAspect = 0.71
     const safeInset = 0.18
@@ -141,7 +148,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
     canvas.height = canvasHeight
 
     const ctx = canvas.getContext('2d')
-    if (!ctx) return undefined
+    if (!ctx) return null
 
     ctx.fillStyle = '#0b1020'
     ctx.fillRect(0, 0, canvasWidth, canvasHeight)
@@ -166,10 +173,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
     mappedTexture.flipY = false
     mappedTexture.colorSpace = THREE.SRGBColorSpace
     mappedTexture.needsUpdate = true
-    setCardTexture(mappedTexture)
-
-    return () => mappedTexture.dispose()
+    return mappedTexture
   }, [profileMap])
+
+  useEffect(() => () => cardTexture?.dispose(), [cardTexture])
+  useEffect(() => () => bandTexture.dispose(), [bandTexture])
 
   useFrame((state, delta) => {
     if (dragged) {
@@ -198,9 +206,6 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z })
     }
   })
-
-  curve.curveType = 'chordal'
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
 
   return (
     <>
@@ -247,7 +252,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }) {
           depthTest={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap
-          map={texture}
+          map={bandTexture}
           repeat={[-4, 1]}
           lineWidth={1}
         />

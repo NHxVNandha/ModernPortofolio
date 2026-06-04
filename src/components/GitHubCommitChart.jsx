@@ -72,12 +72,17 @@ export default function GitHubCommitChart({
 
   useEffect(() => {
     if (isLoading) return undefined
-    setIsChartEntering(true)
+    const enterTimeoutId = window.setTimeout(() => {
+      setIsChartEntering(true)
+    }, 0)
     const timeoutId = window.setTimeout(() => {
       setIsChartEntering(false)
     }, 160)
 
-    return () => window.clearTimeout(timeoutId)
+    return () => {
+      window.clearTimeout(enterTimeoutId)
+      window.clearTimeout(timeoutId)
+    }
   }, [isLoading, selectedYear])
 
   if (isLoading) {
