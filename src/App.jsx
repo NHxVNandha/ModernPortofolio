@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import TrueFocus from './components/TrueFocus.jsx'
 import ElectricBorder from './components/ElectricBorder.jsx'
 import TargetCursor from './components/TargetCursor.jsx'
 import Dock from './components/Dock.jsx'
-import Lanyard from './components/Lanyard.jsx'
 import GitHubCommitChart from './components/GitHubCommitChart.jsx'
 import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
 import LiveSiteMetrics from './components/LiveSiteMetrics.jsx'
 import stitchProjects from './data/stitchProjects.json'
+
+const Lanyard = lazy(() => import('./components/Lanyard.jsx'))
 
 const GITHUB_USERNAME = 'NHxVNandha'
 const GITHUB_REFRESH_INTERVAL = 30 * 60 * 1000
@@ -1304,13 +1305,15 @@ function App() {
                     </div>
                   </div>
                   <div className="w-full h-[300px] md:h-[340px] rounded-3xl overflow-hidden border border-glass-stroke bg-transparent">
-                  <Lanyard
-                    position={[0, 0, 14]}
-                    gravity={[0, -40, 0]}
-                    fov={26}
-                    transparent
-                    fallback={<div className="w-full h-full rb-lanyard-skeleton" aria-hidden="true" />}
-                  />
+                  <Suspense fallback={<div className="w-full h-full rb-lanyard-skeleton" aria-hidden="true" />}>
+                    <Lanyard
+                      position={[0, 0, 14]}
+                      gravity={[0, -40, 0]}
+                      fov={26}
+                      transparent
+                      fallback={<div className="w-full h-full rb-lanyard-skeleton" aria-hidden="true" />}
+                    />
+                  </Suspense>
                   </div>
                 </div>
               </div>
