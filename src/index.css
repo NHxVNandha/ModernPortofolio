@@ -6,6 +6,12 @@ body {
   overflow-x: clip;
 }
 
+html,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 .glass-card {
   background: transparent;
   backdrop-filter: none;
@@ -463,6 +469,71 @@ body {
     display: block;
     opacity: 1;
     transform: none;
+  }
+
+  .rb-home {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    overflow: hidden;
+  }
+
+  .rb-home > div,
+  .rb-profile-card {
+    min-width: 0;
+  }
+
+  .rb-profile-card {
+    padding: 14px;
+  }
+
+  .rb-home-title {
+    font-size: clamp(2.15rem, 11vw, 2.9rem);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+
+  .rb-true-focus,
+  .rb-true-focus .focus-container {
+    width: 100%;
+  }
+
+  .rb-true-focus .focus-container {
+    flex-wrap: wrap;
+  }
+
+  .hero-portrait {
+    width: min(220px, 68vw);
+    max-width: min(220px, 68vw);
+    margin-top: 6px;
+    overflow: visible;
+  }
+
+  .hero-portrait > .absolute {
+    inset: 8%;
+    filter: blur(64px);
+  }
+
+  .hero-portrait .rb-tilt {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+  }
+
+  .home-tech-marquee {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    mask-image: none;
+  }
+
+  .home-tech-track {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-items: center;
+    gap: 14px 10px;
+    animation: none;
   }
 }
 

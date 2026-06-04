@@ -746,12 +746,12 @@ function App() {
       <main className="pt-20 pb-28 md:pb-0">
         <section className={mobileViewClass('home', 'min-h-[calc(100svh-5rem)] md:min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-10 pb-8 md:py-20 overflow-x-clip rb-reveal rb-home')} id="home">
           <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
-            <div className="space-y-6 md:-mt-6 rb-profile-card">
+            <div className="space-y-5 md:space-y-6 md:-mt-6 rb-profile-card min-w-0">
               <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-code text-label-code">
                 <span className="mr-2">Available for projects</span>
                 <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
               </div>
-              <h1 className="font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface rb-gradient-text">Kurnia Hary <span className="text-primary">Trisnandha</span></h1>
+              <h1 className="font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface rb-gradient-text rb-home-title">Kurnia Hary <span className="text-primary">Trisnandha</span></h1>
               <div className="rb-true-focus" aria-label=".NET Developer and Full Stack Web Developer">
                 <TrueFocus
                   sentence=".NET Developer Fullstack"
@@ -764,7 +764,7 @@ function App() {
                 />
               </div>
               <p className="font-body-md text-sm text-on-surface-variant max-w-xl text-justify leading-relaxed">A passionate software developer with experience in ASP.NET, Laravel, POS systems, and healthcare systems. Focused on building scalable applications and solving real-world problems.</p>
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-wrap justify-center sm:justify-start gap-3 md:gap-4 pt-2 md:pt-4">
                 <a className="px-8 py-4 bg-primary text-on-primary rounded-full font-bold glow-hover-blue transition-all rb-magnetic" onMouseMove={magneticMove} onMouseLeave={magneticLeave} href="#projects">View Portfolio</a>
                 <a className="px-8 py-4 border border-glass-stroke backdrop-blur-md rounded-full font-bold hover:bg-white/5 transition-all rb-magnetic" onMouseMove={magneticMove} onMouseLeave={magneticLeave} href="#contact">Contact Me</a>
               </div>
@@ -790,7 +790,7 @@ function App() {
               <div className="home-tech-marquee pt-6 md:pt-10">
                 <div className="home-tech-track">
                   {[...homeTechs, ...homeTechs].map((item, index) => (
-                    <div key={`${item.label}-${index}`} className="flex flex-col items-center group">
+                    <div key={`${item.label}-${index}`} className={`flex flex-col items-center group ${index >= homeTechs.length ? 'hidden md:flex' : ''}`}>
                       <div className={`w-14 h-14 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke ${item.border} transition-all duration-300 group-hover:scale-110`}>
                         {item.symbol ? (
                           <span className={`material-symbols-outlined text-3xl ${item.iconTone}`}>{item.symbol}</span>
