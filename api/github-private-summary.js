@@ -68,7 +68,7 @@ export default async function handler(_req, res) {
   if (!token) {
     return res.status(200).json({
       enabled: false,
-      reason: 'Missing GITHUB_TOKEN',
+      reason: 'Private contribution summary is currently unavailable. Public GitHub activity is still shown.',
       privateContributions: 0,
       totalContributions: 0,
       weeklyContributions: [],
