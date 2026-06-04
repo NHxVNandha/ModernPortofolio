@@ -1005,7 +1005,7 @@ function App() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 mb-8">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary border border-secondary/20 font-label-code text-xs"><span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />Auto-refresh 60s</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary border border-secondary/20 font-label-code text-xs"><span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />Auto-refresh 30m</span>
               <span className="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-code text-xs">Last sync: {githubLastSync ? formatRelativeTime(githubLastSync) : 'syncing...'}</span>
               {githubError ? <span className="px-4 py-2 rounded-full bg-tertiary/10 text-tertiary font-label-code text-xs">{githubError}</span> : null}
             </div>
