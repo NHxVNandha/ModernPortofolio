@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "stitch-cherish-bite-dessert-hub",
+    "title": "Cherish Bite Style",
+    "description": "The design system is built upon the \"Sweet Minimalist\" aesthetic, drawing heavy inspiration from modern Korean cafe culture. It prioritizes a sense of calm, curated indulgence through the use of generous negative space, soft-focus imagery, and a tactile, friendly UI. The emotional goal is to make the user feel as though they are stepping into a boutique patisserie—a space that is warm, personal, and meticulously crafted.",
+    "thumbnail": "/portofolioStitch/stitch-cherish-bite-dessert-hub/screen.png",
+    "htmlUrl": "/portofolioStitch/stitch-cherish-bite-dessert-hub/code.html",
+    "sourceFolder": "public/portofolioStitch/stitch-cherish-bite-dessert-hub"
+  },
+  {
+    "slug": "stitch-shoexcare-modern-shoe-care",
+    "title": "Urban Athletic Premium",
+    "description": "The design system is engineered for the high-end sneaker enthusiast and the busy urban professional. It prioritizes a **Corporate Modern** aesthetic infused with **Subtle Glassmorphism** to evoke a sense of clinical precision and athletic energy.",
+    "thumbnail": "/portofolioStitch/stitch-shoexcare-modern-shoe-care/screen.png",
+    "htmlUrl": "/portofolioStitch/stitch-shoexcare-modern-shoe-care/code.html",
+    "sourceFolder": "public/portofolioStitch/stitch-shoexcare-modern-shoe-care"
+  }
+]

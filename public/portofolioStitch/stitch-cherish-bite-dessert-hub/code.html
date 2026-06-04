@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cherish Bite | Tiny Bites, Big Happiness</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#504441",
+                    "surface-container-high": "#ece7e4",
+                    "inverse-surface": "#32302e",
+                    "on-secondary-fixed-variant": "#65394b",
+                    "on-primary-fixed-variant": "#5b4137",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#e4beb2",
+                    "outline": "#827470",
+                    "secondary-fixed-dim": "#f2b6cb",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#2b160f",
+                    "secondary": "#805062",
+                    "on-tertiary-fixed-variant": "#584324",
+                    "primary-fixed": "#ffdbce",
+                    "surface-dim": "#ded9d6",
+                    "surface-container": "#f2edea",
+                    "on-surface": "#1c1b1a",
+                    "tertiary-fixed": "#feddb3",
+                    "inverse-on-surface": "#f5f0ed",
+                    "secondary-container": "#fec1d6",
+                    "surface-variant": "#e6e2df",
+                    "primary-fixed-dim": "#e4beb2",
+                    "on-primary-container": "#fffcff",
+                    "outline-variant": "#d4c3be",
+                    "tertiary-container": "#8a714e",
+                    "on-secondary-fixed": "#330f1f",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#281801",
+                    "primary-container": "#8d6e63",
+                    "surface-bright": "#fdf8f5",
+                    "on-secondary-container": "#7b4c5e",
+                    "tertiary-fixed-dim": "#e1c299",
+                    "on-background": "#1c1b1a",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f8f3f0",
+                    "surface": "#fdf8f5",
+                    "on-error-container": "#93000a",
+                    "primary": "#72564c",
+                    "tertiary": "#705937",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#fffdff",
+                    "secondary-fixed": "#ffd9e4",
+                    "background": "#fdf8f5",
+                    "surface-tint": "#75584d",
+                    "surface-container-highest": "#e6e2df"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "3xl": "2rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "2rem",
+                    "sm": "1rem",
+                    "max-width": "1200px",
+                    "md": "1.5rem",
+                    "gutter": "1.5rem",
+                    "2xl": "4rem",
+                    "xl": "3rem",
+                    "margin-desktop": "5rem",
+                    "xs": "0.5rem",
+                    "base": "8px",
+                    "margin-mobile": "1rem"
+            },
+            "fontFamily": {
+                    "body-lg": ["Montserrat"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "label-sm": ["Montserrat"],
+                    "body-md": ["Montserrat"],
+                    "label-md": ["Montserrat"],
+                    "body-sm": ["Montserrat"],
+                    "headline-md": ["Playfair Display"],
+                    "headline-xl": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .diffusion-shadow {
+            box-shadow: 0 20px 40px -15px rgba(114, 86, 76, 0.1);
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(254, 221, 179, 0.3) 0%, rgba(253, 248, 245, 0) 70%);
+        }
+        .floating-anim {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0_20px_40px_-15px_rgba(114,86,76,0.05)]">
+<nav class="flex justify-between items-center max-w-[1200px] mx-auto px-lg py-sm h-20">
+<div class="flex items-center gap-2">
+<img alt="Cherish Bite Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8QwKSAVnlFOIkz-Oy3v1FuKbEpwERlCKFEOJB_CKfDeEHKOPmGQK3oWcTb4rOJM5vRw6iRpKU25BhbTnnzj2CKG4VX_0Bqf0kqmwEXu3LTP47U5zIvc_UzhNzrtm7nhdvs0XJMS4H4nE30EfJcHGkGFoPH5AZZ0L9Rdqf3EtXyNB4Xi76pIwausf0r2NnB4yVH1F_fyT8kM9sk-SYUcjbwi0mN0-NATtP08tELIWkCV3xxC0fX7XvBmWqa_HGP-vXoo_nbk34gpU"/>
+<span class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">Cherish Bite</span>
+</div>
+<div class="hidden md:flex gap-xl">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#shop">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#about">Our Story</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#flavors">Flavors</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#contact">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-lg py-3 rounded-2xl font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all duration-200">
+                Order Now
+            </button>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-2xl hero-gradient">
+<div class="max-w-[1200px] mx-auto px-lg flex flex-col md:flex-row items-center gap-xl min-h-[70vh]">
+<div class="flex-1 space-y-md text-center md:text-left z-10">
+<span class="inline-block px-4 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm uppercase tracking-widest">Premium Patisserie</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface md:leading-tight">
+                        Tiny Bites,<br/>Big Happiness.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto md:mx-0">
+                        At Cherish Bite, every little dessert is handcrafted with premium ingredients and a touch of magic to brighten your day.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md pt-md justify-center md:justify-start">
+<button class="px-xl py-4 bg-primary text-on-primary rounded-2xl font-label-md text-label-md diffusion-shadow hover:-translate-y-1 transition-transform">Order Now</button>
+<button class="px-xl py-4 bg-surface-container-high text-primary rounded-2xl font-label-md text-label-md hover:bg-surface-variant transition-colors">See Menu</button>
+</div>
+</div>
+<div class="flex-1 relative">
+<div class="relative w-full aspect-square rounded-3xl overflow-hidden diffusion-shadow z-0">
+<img alt="Hero Puding" class="w-full h-full object-cover" data-alt="A macro close-up of a silky caramel pudding in a clear glass, with glossy caramel sauce dripping down the sides. The lighting is warm and soft, reminiscent of a Korean cafe aesthetic. The background is a minimalist cream and beige setting with soft-focus floral accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIw1k-sSUCt24wkW2qpEc8rNHI4bVHjmX6M4wxg7RF9uRrc7tKH6Uz7PxCkXaMch-KDlq3lQtXh5-c1MdHMRuSCstnFSAyMqyvvIgbm278DkjFYDklhP9Txob4vhAPYNgRCm9eNiC_L6G2viZPjpv1UzIc3UVEYMvKa0i2Ojr8k4Sp0m_gOtHxRBBSL7wa3bS4ce2-hgFOBuq7HSm_UXnlG3txNiildadcucQ73OLGrfC4km3E32wRDiwQ8Qoe-01YC1FDxiKo-i0"/>
+</div>
+<!-- Floating Cards -->
+<div class="absolute -bottom-6 -left-12 p-sm bg-surface rounded-2xl diffusion-shadow floating-anim hidden lg:block border border-outline/5">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed overflow-hidden">
+<img alt="Cookie Mini" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZxnyVE868f0vQBVU_C7ifvZpjyORCbdquHVHDAMYGgUaC_KPc7yzOi8ZQx9z7ZacpciuQw3WP0mNEVugBlOPdVXi3bPadVU2E8ddXa_KxhZ3O8MyKssAjn9Iy87i8g2km7OOpPWhahDjA0rw04Yvrty6BIZnxIaQS3cy52bIYRMDSFyvzJera-mi7gESYuM6gm8DQRWi4izmhJ2v52PLIpC9EI8JYFG5B8pbkKInamgSZro5LkKFhLBngr1Us-AjLxu1BLM3M6s"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary">New Flavor!</p>
+<p class="font-body-sm text-body-sm opacity-60">Sea Salt Cookie</p>
+</div>
+</div>
+</div>
+<div class="absolute -top-6 -right-6 p-sm bg-surface rounded-2xl diffusion-shadow floating-anim hidden lg:block delay-700 border border-outline/5">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<p class="font-label-md text-label-md text-on-surface">5.0 Customer Rating</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-2xl bg-surface-container-low" id="about">
+<div class="max-width mx-auto px-lg grid md:grid-cols-2 gap-2xl items-center">
+<div class="order-2 md:order-1 relative group">
+<div class="grid grid-cols-2 gap-sm">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden mt-xl">
+<img alt="Brownies Close Up" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A stack of rich, fudgy chocolate brownies on a ceramic plate, topped with delicate edible rose petals. The lighting is bright and natural, highlighting the moist texture of the dessert. The overall style is clean, modern, and inviting, with a palette of deep chocolate brown and soft ivory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAa9M41KXeYC0QzXab9GXTtmCU3Yb1V48ElGnYmDYiKR94MzabzNmTP0K_Sncq-VojQ5CCXyVdWLqWdN5jbNTtqriL6cfkYXEFP8eg0ZRaA1La1NOyXZ6I1LANAnjBoXz1uMjH1nYW1pCcinxIymOiRORKz6o8SBE82l7QN00mltS89i58Hu6Lzjceeo_r152C6uBvy3XlxiYIW0HdG-vsm0ZNIRnMLj3e89ER6MBwpkKukeoISwwQ4o137nMidxw0ynt6e6y9JGQ"/>
+</div>
+<div class="aspect-[4/5] rounded-3xl overflow-hidden">
+<img alt="Cookies Stack" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A stack of golden brown chocolate chip cookies sprinkled with sea salt flakes, resting on a rustic ceramic plate. Next to it is a glass of fresh milk. The scene is set in a light-filled studio with beige and cream textures, creating a cozy and artisanal atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZxnyVE868f0vQBVU_C7ifvZpjyORCbdquHVHDAMYGgUaC_KPc7yzOi8ZQx9z7ZacpciuQw3WP0mNEVugBlOPdVXi3bPadVU2E8ddXa_KxhZ3O8MyKssAjn9Iy87i8g2km7OOpPWhahDjA0rw04Yvrty6BIZnxIaQS3cy52bIYRMDSFyvzJera-mi7gESYuM6gm8DQRWi4izmhJ2v52PLIpC9EI8JYFG5B8pbkKInamgSZro5LkKFhLBngr1Us-AjLxu1BLM3M6s"/>
+</div>
+</div>
+</div>
+<div class="order-1 md:order-2 space-y-md">
+<h2 class="font-headline-lg text-headline-lg text-primary">A Sweet Story in Every Bite</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        We believe that happiness doesn't have to be big—it can be found in the smallest details. Cherish Bite was born from a passion for premium ingredients and the Japanese-inspired philosophy of "Kobito" or small things that bring joy. 
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant/80">
+                        Our patisserie specializes in bite-sized indulgences, designed to be shared, gifted, or enjoyed as a personal reward. From our silky Gyukaku-inspired puddings to our fudgy brownies, every piece is a labor of love.
+                    </p>
+<div class="pt-sm">
+<a class="inline-flex items-center gap-xs font-label-md text-label-md text-primary group" href="#">
+                            Learn more about our ingredients
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Category Grid -->
+<section class="py-2xl" id="shop">
+<div class="max-width mx-auto px-lg">
+<div class="text-center space-y-xs mb-2xl">
+<span class="text-secondary font-label-md text-label-md tracking-[0.2em] uppercase">Signature Collection</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Discover Your Favorite Bite</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<!-- Brownies Bite -->
+<div class="group">
+<div class="relative rounded-3xl overflow-hidden bg-surface-container-high aspect-[4/5] mb-md">
+<img alt="Brownies Bite" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAa9M41KXeYC0QzXab9GXTtmCU3Yb1V48ElGnYmDYiKR94MzabzNmTP0K_Sncq-VojQ5CCXyVdWLqWdN5jbNTtqriL6cfkYXEFP8eg0ZRaA1La1NOyXZ6I1LANAnjBoXz1uMjH1nYW1pCcinxIymOiRORKz6o8SBE82l7QN00mltS89i58Hu6Lzjceeo_r152C6uBvy3XlxiYIW0HdG-vsm0ZNIRnMLj3e89ER6MBwpkKukeoISwwQ4o137nMidxw0ynt6e6y9JGQ"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-surface text-primary px-lg py-3 rounded-2xl font-label-md text-label-md diffusion-shadow transform translate-y-4 group-hover:translate-y-0 transition-transform">Quick View</button>
+</div>
+</div>
+<div class="space-y-xs px-2">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Brownies Bite</h3>
+<span class="font-label-md text-label-md text-primary">$12.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fudgy, soft, and rich chocolate with a crackly top.</p>
+<button class="w-full mt-sm py-3 border border-primary/20 rounded-2xl font-label-md text-label-md text-primary hover:bg-primary hover:text-on-primary transition-all duration-300">Order Now</button>
+</div>
+</div>
+<!-- Cookies Bite -->
+<div class="group">
+<div class="relative rounded-3xl overflow-hidden bg-surface-container-high aspect-[4/5] mb-md">
+<img alt="Cookies Bite" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZxnyVE868f0vQBVU_C7ifvZpjyORCbdquHVHDAMYGgUaC_KPc7yzOi8ZQx9z7ZacpciuQw3WP0mNEVugBlOPdVXi3bPadVU2E8ddXa_KxhZ3O8MyKssAjn9Iy87i8g2km7OOpPWhahDjA0rw04Yvrty6BIZnxIaQS3cy52bIYRMDSFyvzJera-mi7gESYuM6gm8DQRWi4izmhJ2v52PLIpC9EI8JYFG5B8pbkKInamgSZro5LkKFhLBngr1Us-AjLxu1BLM3M6s"/>
+<span class="absolute top-4 right-4 bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm">Best Seller</span>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-surface text-primary px-lg py-3 rounded-2xl font-label-md text-label-md diffusion-shadow transform translate-y-4 group-hover:translate-y-0 transition-transform">Quick View</button>
+</div>
+</div>
+<div class="space-y-xs px-2">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Cookies Bite</h3>
+<span class="font-label-md text-label-md text-primary">$10.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Crunchy outside, chewy inside, perfect mini size for snacking.</p>
+<button class="w-full mt-sm py-3 border border-primary/20 rounded-2xl font-label-md text-label-md text-primary hover:bg-primary hover:text-on-primary transition-all duration-300">Order Now</button>
+</div>
+</div>
+<!-- Puding Caramel -->
+<div class="group">
+<div class="relative rounded-3xl overflow-hidden bg-surface-container-high aspect-[4/5] mb-md">
+<img alt="Puding Caramel" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIw1k-sSUCt24wkW2qpEc8rNHI4bVHjmX6M4wxg7RF9uRrc7tKH6Uz7PxCkXaMch-KDlq3lQtXh5-c1MdHMRuSCstnFSAyMqyvvIgbm278DkjFYDklhP9Txob4vhAPYNgRCm9eNiC_L6G2viZPjpv1UzIc3UVEYMvKa0i2Ojr8k4Sp0m_gOtHxRBBSL7wa3bS4ce2-hgFOBuq7HSm_UXnlG3txNiildadcucQ73OLGrfC4km3E32wRDiwQ8Qoe-01YC1FDxiKo-i0"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-surface text-primary px-lg py-3 rounded-2xl font-label-md text-label-md diffusion-shadow transform translate-y-4 group-hover:translate-y-0 transition-transform">Quick View</button>
+</div>
+</div>
+<div class="space-y-xs px-2">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Puding Caramel</h3>
+<span class="font-label-md text-label-md text-primary">$15.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Silky texture, creamy caramel, Gyukaku-inspired recipe.</p>
+<button class="w-full mt-sm py-3 border border-primary/20 rounded-2xl font-label-md text-label-md text-primary hover:bg-primary hover:text-on-primary transition-all duration-300">Order Now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="py-2xl bg-surface-bright">
+<div class="max-width mx-auto px-lg">
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-lg">
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-primary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="restaurant" style="font-variation-settings: 'FILL' 0;">restaurant</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Freshly Made</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Baked daily to ensure the highest quality and taste.</p>
+</div>
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-secondary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="sentiment_very_satisfied" style="font-variation-settings: 'FILL' 0;">sentiment_very_satisfied</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Bite-Sized Happiness</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Small portions that pack a massive flavor punch.</p>
+</div>
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="star" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Premium Ingredients</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Only the finest cocoa, butter, and cream make the cut.</p>
+</div>
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-secondary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="featured_seasonal" style="font-variation-settings: 'FILL' 0;">featured_seasonal_and_gifts</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Perfect for Gifting</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Beautifully curated for your loved ones' special days.</p>
+</div>
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-primary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="home" style="font-variation-settings: 'FILL' 0;">home</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Homemade Taste</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Crafted with the care and warmth of home baking.</p>
+</div>
+<div class="bg-surface p-lg rounded-3xl diffusion-shadow space-y-sm hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="inventory_2" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Aesthetic Packaging</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Our boxes are as delightful as what's inside them.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-2xl overflow-hidden">
+<div class="max-width mx-auto px-lg">
+<h2 class="font-headline-lg text-headline-lg text-center mb-2xl text-on-surface">What Our Sweet Fans Say</h2>
+<div class="flex gap-lg overflow-x-auto pb-lg snap-x no-scrollbar">
+<div class="min-w-[300px] md:min-w-[400px] bg-surface-container-low p-xl rounded-3xl snap-center border border-outline/5">
+<div class="flex gap-1 text-secondary mb-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-lg text-body-lg italic text-on-surface mb-lg">"The caramel pudding is absolute perfection. It's so smooth and not overly sweet. Exactly like what I had in Tokyo!"</p>
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed"></div>
+<div>
+<p class="font-label-md text-label-md">Sarah J.</p>
+<p class="font-label-sm text-label-sm opacity-60">Verified Customer</p>
+</div>
+</div>
+</div>
+<div class="min-w-[300px] md:min-w-[400px] bg-surface-container-low p-xl rounded-3xl snap-center border border-outline/5">
+<div class="flex gap-1 text-secondary mb-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-lg text-body-lg italic text-on-surface mb-lg">"The brownies bites are addictive. I bought a box for a friend but ended up eating half of them myself. Zero regrets!"</p>
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed"></div>
+<div>
+<p class="font-label-md text-label-md">Michael K.</p>
+<p class="font-label-sm text-label-sm opacity-60">Verified Customer</p>
+</div>
+</div>
+</div>
+<div class="min-w-[300px] md:min-w-[400px] bg-surface-container-low p-xl rounded-3xl snap-center border border-outline/5">
+<div class="flex gap-1 text-secondary mb-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-lg text-body-lg italic text-on-surface mb-lg">"Love the packaging! It's so cute and gift-ready. The sea salt cookies are the perfect balance of salty and sweet."</p>
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed"></div>
+<div>
+<p class="font-label-md text-label-md">Emily R.</p>
+<p class="font-label-sm text-label-sm opacity-60">Verified Customer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery Grid -->
+<section class="py-2xl bg-surface-container-lowest">
+<div class="max-width mx-auto px-lg">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-sm">
+<div class="aspect-square rounded-2xl overflow-hidden">
+<img alt="Gallery 1" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIw1k-sSUCt24wkW2qpEc8rNHI4bVHjmX6M4wxg7RF9uRrc7tKH6Uz7PxCkXaMch-KDlq3lQtXh5-c1MdHMRuSCstnFSAyMqyvvIgbm278DkjFYDklhP9Txob4vhAPYNgRCm9eNiC_L6G2viZPjpv1UzIc3UVEYMvKa0i2Ojr8k4Sp0m_gOtHxRBBSL7wa3bS4ce2-hgFOBuq7HSm_UXnlG3txNiildadcucQ73OLGrfC4km3E32wRDiwQ8Qoe-01YC1FDxiKo-i0"/>
+</div>
+<div class="aspect-square rounded-2xl overflow-hidden">
+<img alt="Gallery 2" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZxnyVE868f0vQBVU_C7ifvZpjyORCbdquHVHDAMYGgUaC_KPc7yzOi8ZQx9z7ZacpciuQw3WP0mNEVugBlOPdVXi3bPadVU2E8ddXa_KxhZ3O8MyKssAjn9Iy87i8g2km7OOpPWhahDjA0rw04Yvrty6BIZnxIaQS3cy52bIYRMDSFyvzJera-mi7gESYuM6gm8DQRWi4izmhJ2v52PLIpC9EI8JYFG5B8pbkKInamgSZro5LkKFhLBngr1Us-AjLxu1BLM3M6s"/>
+</div>
+<div class="aspect-[3/4] rounded-2xl overflow-hidden row-span-2">
+<img alt="Gallery 3" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAa9M41KXeYC0QzXab9GXTtmCU3Yb1V48ElGnYmDYiKR94MzabzNmTP0K_Sncq-VojQ5CCXyVdWLqWdN5jbNTtqriL6cfkYXEFP8eg0ZRaA1La1NOyXZ6I1LANAnjBoXz1uMjH1nYW1pCcinxIymOiRORKz6o8SBE82l7QN00mltS89i58Hu6Lzjceeo_r152C6uBvy3XlxiYIW0HdG-vsm0ZNIRnMLj3e89ER6MBwpkKukeoISwwQ4o137nMidxw0ynt6e6y9JGQ"/>
+</div>
+<div class="aspect-square rounded-2xl overflow-hidden">
+<img alt="Gallery 4" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIw1k-sSUCt24wkW2qpEc8rNHI4bVHjmX6M4wxg7RF9uRrc7tKH6Uz7PxCkXaMch-KDlq3lQtXh5-c1MdHMRuSCstnFSAyMqyvvIgbm278DkjFYDklhP9Txob4vhAPYNgRCm9eNiC_L6G2viZPjpv1UzIc3UVEYMvKa0i2Ojr8k4Sp0m_gOtHxRBBSL7wa3bS4ce2-hgFOBuq7HSm_UXnlG3txNiildadcucQ73OLGrfC4km3E32wRDiwQ8Qoe-01YC1FDxiKo-i0"/>
+</div>
+<div class="aspect-square rounded-2xl overflow-hidden">
+<img alt="Gallery 5" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeZxnyVE868f0vQBVU_C7ifvZpjyORCbdquHVHDAMYGgUaC_KPc7yzOi8ZQx9z7ZacpciuQw3WP0mNEVugBlOPdVXi3bPadVU2E8ddXa_KxhZ3O8MyKssAjn9Iy87i8g2km7OOpPWhahDjA0rw04Yvrty6BIZnxIaQS3cy52bIYRMDSFyvzJera-mi7gESYuM6gm8DQRWi4izmhJ2v52PLIpC9EI8JYFG5B8pbkKInamgSZro5LkKFhLBngr1Us-AjLxu1BLM3M6s"/>
+</div>
+<div class="aspect-square rounded-2xl overflow-hidden md:col-span-2">
+<div class="w-full h-full bg-primary-fixed flex flex-col items-center justify-center p-lg text-center space-y-sm">
+<span class="material-symbols-outlined text-primary scale-150" data-icon="instagram" style="font-variation-settings: 'FILL' 0;">retweet</span>
+<h3 class="font-headline-md text-headline-md text-on-primary-fixed">Join our sweet community @cherishbite</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-2xl relative overflow-hidden" id="contact">
+<div class="max-width mx-auto px-lg text-center relative z-10">
+<div class="bg-surface-container-high rounded-[3rem] p-2xl space-y-lg diffusion-shadow">
+<h2 class="font-headline-xl text-headline-xl text-primary">Ready to Sweeten Your Day?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                        Whether it's a gift for someone special or a treat for yourself, our little bites are waiting to bring you happiness. Order via WhatsApp or follow our journey on Instagram.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md justify-center pt-md">
+<a class="inline-flex items-center justify-center gap-sm px-xl py-4 bg-primary text-on-primary rounded-2xl font-label-md text-label-md hover:opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+                            WhatsApp Order
+                        </a>
+<a class="inline-flex items-center justify-center gap-sm px-xl py-4 border-2 border-primary text-primary rounded-2xl font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="camera" style="font-variation-settings: 'FILL' 1;">camera</span>
+                            Instagram
+                        </a>
+</div>
+</div>
+</div>
+<!-- Background Decoration -->
+<div class="absolute top-1/2 left-0 w-64 h-64 bg-secondary-fixed/30 blur-[100px] -translate-y-1/2 -z-0"></div>
+<div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-fixed/30 blur-[120px] translate-y-1/2 -z-0"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-low dark:bg-inverse-surface border-t border-outline/10">
+<div class="max-w-[1200px] mx-auto px-lg py-2xl grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="space-y-md">
+<div class="flex items-center gap-2">
+<img alt="Cherish Bite Logo" class="h-12 w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8QwKSAVnlFOIkz-Oy3v1FuKbEpwERlCKFEOJB_CKfDeEHKOPmGQK3oWcTb4rOJM5vRw6iRpKU25BhbTnnzj2CKG4VX_0Bqf0kqmwEXu3LTP47U5zIvc_UzhNzrtm7nhdvs0XJMS4H4nE30EfJcHGkGFoPH5AZZ0L9Rdqf3EtXyNB4Xi76pIwausf0r2NnB4yVH1F_fyT8kM9sk-SYUcjbwi0mN0-NATtP08tELIWkCV3xxC0fX7XvBmWqa_HGP-vXoo_nbk34gpU"/>
+<span class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed-dim">Cherish Bite</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant max-w-xs">
+                    Handcrafted artisanal desserts that prioritize flavor and aesthetic. Made fresh every single day.
+                </p>
+<div class="flex gap-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-lg">
+<div class="space-y-md">
+<h5 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Quick Links</h5>
+<ul class="space-y-sm">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Shop All</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Our Story</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Shipping Info</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Wholesale</a></li>
+</ul>
+</div>
+<div class="space-y-md">
+<h5 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Support</h5>
+<ul class="space-y-sm">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Privacy Policy</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Terms of Service</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all inline-block" href="#">Contact Us</a></li>
+</ul>
+</div>
+</div>
+<div class="space-y-md">
+<h5 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Store Hours</h5>
+<div class="space-y-xs">
+<p class="font-body-sm text-body-sm text-on-surface-variant flex justify-between"><span>Mon - Fri</span> <span>09:00 - 18:00</span></p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex justify-between"><span>Saturday</span> <span>10:00 - 16:00</span></p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex justify-between"><span>Sunday</span> <span>Closed</span></p>
+</div>
+<div class="pt-md">
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-60">© 2024 Cherish Bite. Crafted with love.</p>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Intersection Observer for smooth reveal animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        // Add reveal classes to sections
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

@@ -6,6 +6,7 @@ import Dock from './components/Dock.jsx'
 import Lanyard from './components/Lanyard.jsx'
 import GitHubCommitChart from './components/GitHubCommitChart.jsx'
 import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
+import stitchProjects from './data/stitchProjects.json'
 
 const GITHUB_USERNAME = 'NHxVNandha'
 const GITHUB_REFRESH_INTERVAL = 60000
@@ -68,6 +69,7 @@ const socialLinks = [
 
 const footerNavLinks = [
   { label: 'Projects', href: '#projects' },
+  { label: 'Stitch', href: '#stitch' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -238,6 +240,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [activeDockSection, setActiveDockSection] = useState('home')
   const [isContactVisible, setIsContactVisible] = useState(false)
+  const [selectedStitchSlug, setSelectedStitchSlug] = useState(stitchProjects[0]?.slug || '')
   const [githubRepos, setGithubRepos] = useState([])
   const [githubEvents, setGithubEvents] = useState([])
   const [githubProfile, setGithubProfile] = useState({
@@ -287,7 +290,7 @@ function App() {
   ]
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'contact']
+    const sectionIds = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'stitch', 'contact']
     const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean)
     const dockSections = ['home', 'skills', 'education', 'projects', 'contact'].map((id) => document.getElementById(id)).filter(Boolean)
 
@@ -536,6 +539,8 @@ function App() {
   ]
 
   const projectRepos = githubRepos.slice(0, 6)
+  const selectedStitchProject = stitchProjects.find((project) => project.slug === selectedStitchSlug) || stitchProjects[0] || null
+  const selectedStitchIndex = selectedStitchProject ? stitchProjects.findIndex((project) => project.slug === selectedStitchProject.slug) : -1
   const githubStats = githubRepos.reduce(
     (stats, repo) => ({
       stars: stats.stars + repo.stargazers_count,
@@ -622,6 +627,7 @@ function App() {
             <a className={navClass('skills')} href="#skills">Skills</a>
             <a className={navClass('experience')} href="#experience">Experience</a>
             <a className={navClass('projects')} href="#projects">Projects</a>
+            <a className={navClass('stitch')} href="#stitch">Stitch</a>
             <a className={navClass('contact')} href="#contact">Contact</a>
           </div>
           <div className="hidden md:flex items-center gap-3">
@@ -654,6 +660,7 @@ function App() {
               <a className={activeSection === 'skills' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
               <a className={activeSection === 'experience' || activeSection === 'education' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
               <a className={activeSection === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+              <a className={activeSection === 'stitch' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#stitch" onClick={() => setMenuOpen(false)}>Stitch</a>
               <a className={activeSection === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'} href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
               <button className="mt-2 bg-primary text-on-primary px-6 py-3 rounded-full font-bold w-full">Resume</button>
             </div>
@@ -1093,6 +1100,77 @@ function App() {
               </div>
             ) : (
               <div className="github-empty-state">No public repositories found for {GITHUB_USERNAME}.</div>
+            )}
+          </div>
+        </section>
+
+
+        <section className="py-20 bg-surface-deep rb-reveal" id="stitch">
+          <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+            <div className="stitch-section-head">
+              <div>
+                <p className="font-label-code text-xs uppercase tracking-[0.28em] text-secondary mb-3">Google Stitch Exports</p>
+                <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Stitch <span className="text-secondary">Concepts</span></h2>
+                <div className="w-20 h-1 bg-secondary rounded-full" />
+                <p className="mt-6 text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Generated interface concepts exported from Google Stitch. Each project is loaded from the local portfolioStitch folder and previewed directly in this page without opening a modal or a new browser tab.</p>
+              </div>
+              <span className="stitch-count-badge">{stitchProjects.length} concepts</span>
+            </div>
+
+            {stitchProjects.length ? (
+              <div className="stitch-showcase">
+                <div className="stitch-tabs" aria-label="Stitch concept selector">
+                  {stitchProjects.map((project) => {
+                    const isActive = selectedStitchProject?.slug === project.slug
+                    return (
+                      <button
+                        key={project.slug}
+                        type="button"
+                        className={`stitch-tab rb-target-card ${isActive ? 'is-active' : ''}`}
+                        onClick={() => setSelectedStitchSlug(project.slug)}
+                        aria-pressed={isActive}
+                      >
+                        <img src={project.thumbnail} alt={`${project.title} thumbnail`} loading="lazy" />
+                        <span>
+                          <strong>{project.title}</strong>
+                          <small>Google Stitch Export</small>
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <div className="stitch-active-bar">
+                  <div>
+                    <p className="font-label-code text-xs text-secondary">Selected Concept</p>
+                    <h3>{selectedStitchProject?.title}</h3>
+                    <p>{selectedStitchProject?.description}</p>
+                  </div>
+                  <span>{selectedStitchIndex + 1} / {stitchProjects.length}</span>
+                </div>
+
+                <div className="stitch-browser">
+                  <div className="stitch-browser-chrome">
+                    <span className="stitch-browser-dots" aria-hidden="true"><i /><i /><i /></span>
+                    <code>{selectedStitchProject?.htmlUrl}</code>
+                  </div>
+                  <div className="stitch-browser-frame">
+                    <iframe
+                      key={selectedStitchProject?.slug}
+                      src={selectedStitchProject?.htmlUrl}
+                      title={`${selectedStitchProject?.title} Google Stitch preview`}
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-forms"
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="stitch-empty-state">
+                <span className="material-symbols-outlined text-secondary text-4xl">folder_open</span>
+                <h3>No Stitch exports detected yet.</h3>
+                <p>Create folders inside <code>public/portofolioStitch</code>. Each folder should contain one HTML file and one PNG/JPG/WebP thumbnail, then run <code>npm run generate:stitch</code>.</p>
+              </div>
             )}
           </div>
         </section>

@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "generate:stitch": "node scripts/generate-stitch-projects.js",
+    "dev": "npm run generate:stitch && vite",
+    "build": "npm run generate:stitch && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
