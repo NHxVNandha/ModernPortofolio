@@ -702,8 +702,8 @@ function App() {
       ) : null}
 
       <main className="pt-20 pb-28 md:pb-0">
-        <section className="min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-20 overflow-x-clip rb-reveal rb-home" id="home">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
+        <section className="min-h-[calc(100svh-5rem)] md:min-h-screen px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-10 pb-8 md:py-20 overflow-x-clip rb-reveal rb-home" id="home">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
             <div className="space-y-6 md:-mt-6 rb-profile-card">
               <div className="inline-flex items-center px-4 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-code text-label-code">
                 <span className="mr-2">Available for projects</span>
@@ -745,7 +745,7 @@ function App() {
                   />
                 </div>
               </div>
-              <div className="home-tech-marquee pt-10">
+              <div className="home-tech-marquee pt-6 md:pt-10">
                 <div className="home-tech-track">
                   {[...homeTechs, ...homeTechs].map((item, index) => (
                     <div key={`${item.label}-${index}`} className="flex flex-col items-center group">
@@ -766,7 +766,7 @@ function App() {
           </div>
         </section>
 
-        <section className="py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto scroll-mt-24" id="skills">
+        <section className="pt-8 pb-14 md:py-14 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto scroll-mt-24" id="skills">
           <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-start">
             <div className="rb-reveal rb-about" id="about">
               <div className="glass-card p-8 rounded-lg grid gap-bento-gap">
