@@ -621,7 +621,9 @@ function App() {
       <div className="rb-ambient-orb rb-ambient-b" />
       <nav className="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-[20px] border-b border-glass-stroke h-20">
         <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-full max-w-7xl mx-auto">
-          <div className="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Kurnia Hary</div>
+          <a className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-glass-stroke bg-surface-container-low/70 p-1.5 transition-transform duration-300 hover:scale-105" href="#home" aria-label="Kurnia Hary home">
+            <img className="h-full w-full" src="/favicon.svg" alt="" aria-hidden="true" />
+          </a>
           <div className="hidden md:flex items-center gap-gutter font-body-md text-body-md">
             <a className={navClass('home')} href="#home">Home</a>
             <a className={navClass('skills')} href="#skills">Skills</a>
