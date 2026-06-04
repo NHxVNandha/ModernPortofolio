@@ -790,7 +790,7 @@ function App() {
               <div className="home-tech-marquee pt-6 md:pt-10">
                 <div className="home-tech-track">
                   {[...homeTechs, ...homeTechs].map((item, index) => (
-                    <div key={`${item.label}-${index}`} className="flex flex-col items-center group">
+                    <div key={`${item.label}-${index}`} className={`flex flex-col items-center group ${index >= homeTechs.length ? 'hidden md:flex' : ''}`}>
                       <div className={`w-14 h-14 flex items-center justify-center rounded-xl bg-surface-container border border-glass-stroke ${item.border} transition-all duration-300 group-hover:scale-110`}>
                         {item.symbol ? (
                           <span className={`material-symbols-outlined text-3xl ${item.iconTone}`}>{item.symbol}</span>
