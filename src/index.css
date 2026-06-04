@@ -1740,13 +1740,73 @@ html,
 }
 
 @media (max-width: 640px) {
-  .metrics-grid-primary,
+  .metrics-grid-primary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .metrics-stat-card {
+    min-height: 132px;
+    padding: 1rem;
+    border-radius: 22px;
+  }
+
+  .metrics-stat-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 14px;
+    font-size: 1.25rem;
+  }
+
+  .metrics-stat-card strong {
+    margin-top: 1rem;
+    font-size: clamp(1.35rem, 8vw, 1.8rem);
+  }
+
+  .metrics-stat-card p {
+    font-size: 0.7rem;
+  }
+
   .metrics-vitals-grid {
     grid-template-columns: 1fr;
   }
 
   .metrics-card-head {
     flex-direction: column;
+  }
+
+  .rb-contact-channel-grid {
+    gap: 0.75rem;
+  }
+
+  .rb-contact-channel-card {
+    padding: 1rem !important;
+    border-radius: 22px;
+  }
+
+  .rb-contact-channel-card > div {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rb-contact-channel-card > div > div:first-child {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 14px;
+  }
+
+  .rb-contact-channel-card p:first-child {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rb-contact-channel-card p:nth-child(2) {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .rb-contact-channel-card p:nth-child(3) {
+    display: none;
   }
 }
 

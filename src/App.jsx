@@ -1260,9 +1260,9 @@ function App() {
               </div>
               <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 md:gap-10 items-start">
                 <div>
-                  <div className="grid sm:grid-cols-2 gap-4 text-left mb-8">
+                  <div className="grid grid-cols-2 gap-4 text-left mb-8 rb-contact-channel-grid">
                     {contactLinks.map((item) => (
-                      <a key={item.label} className="group rounded-3xl border border-glass-stroke bg-surface-container/50 p-5 transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-surface-container-high" href={item.href} target={item.href.startsWith('mailto:') ? undefined : '_blank'} rel={item.href.startsWith('mailto:') ? undefined : 'noreferrer'}>
+                      <a key={item.label} className="group rounded-3xl border border-glass-stroke bg-surface-container/50 p-5 transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-surface-container-high rb-contact-channel-card" href={item.href} target={item.href.startsWith('mailto:') ? undefined : '_blank'} rel={item.href.startsWith('mailto:') ? undefined : 'noreferrer'}>
                         <div className="flex items-start gap-4">
                           <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0 transition-colors ${item.iconWrapClass}`}>
                             {item.devicon ? <i className={`${item.devicon} ${item.iconClass} text-2xl`} /> : <span className={`material-symbols-outlined ${item.iconClass} text-2xl`}>{item.icon}</span>}
