@@ -30,7 +30,7 @@ const mobileViewByHash = {
   education: 'journey',
   projects: 'projects',
   'site-metrics': 'metrics',
-  stitch: 'stitch',
+  stitch: 'projects',
   contact: 'contact',
 }
 
@@ -40,7 +40,6 @@ const mobileViewPrimarySection = {
   journey: 'experience',
   projects: 'projects',
   metrics: 'site-metrics',
-  stitch: 'stitch',
   contact: 'contact',
 }
 
@@ -570,6 +569,7 @@ function App() {
     { icon: <span className="material-symbols-outlined text-[20px]">auto_awesome</span>, label: 'Profile', onClick: () => showMobileView('profile'), className: activeMobileView === 'profile' ? 'rb-dock-active' : '' },
     { icon: <span className="material-symbols-outlined text-[20px]">school</span>, label: 'Journey', onClick: () => showMobileView('journey'), className: activeMobileView === 'journey' ? 'rb-dock-active' : '' },
     { icon: <span className="material-symbols-outlined text-[20px]">work</span>, label: 'Projects', onClick: () => showMobileView('projects'), className: activeMobileView === 'projects' ? 'rb-dock-active' : '' },
+    { icon: <span className="material-symbols-outlined text-[20px]">monitoring</span>, label: 'Metrics', onClick: () => showMobileView('metrics'), className: activeMobileView === 'metrics' ? 'rb-dock-active' : '' },
     { icon: <span className="material-symbols-outlined text-[20px]">mail</span>, label: 'Contact', onClick: () => showMobileView('contact'), className: activeMobileView === 'contact' ? 'rb-dock-active' : '' },
   ]
 
@@ -709,7 +709,6 @@ function App() {
               <button type="button" className={`text-left ${activeMobileView === 'journey' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('journey')}>Journey</button>
               <button type="button" className={`text-left ${activeMobileView === 'projects' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('projects')}>Projects</button>
               <button type="button" className={`text-left ${activeMobileView === 'metrics' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('metrics')}>Metrics</button>
-              <button type="button" className={`text-left ${activeMobileView === 'stitch' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('stitch')}>Stitch</button>
               <button type="button" className={`text-left ${activeMobileView === 'contact' ? 'text-primary font-bold' : 'text-on-surface-variant'}`} onClick={() => showMobileView('contact')}>Contact</button>
               <button className="mt-2 bg-primary text-on-primary px-6 py-3 rounded-full font-bold w-full">Resume</button>
             </div>
@@ -1170,7 +1169,7 @@ function App() {
         </section>
 
 
-        <section className={mobileViewClass('stitch', 'py-20 bg-surface-deep rb-reveal')} id="stitch">
+        <section className={mobileViewClass('projects', 'py-20 bg-surface-deep rb-reveal')} id="stitch">
           <div className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
             <div className="stitch-section-head">
               <div>
