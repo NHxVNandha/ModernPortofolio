@@ -104,6 +104,25 @@ html,
   border-left-color: #8c909f !important;
 }
 
+@media (max-width: 640px) {
+  .rb-arsenal-grid .arsenal-card {
+    padding: 1rem;
+  }
+
+  .rb-arsenal-grid h3 {
+    font-size: 1rem;
+  }
+
+  .rb-arsenal-grid ul {
+    font-size: 0.8rem;
+  }
+
+  .rb-arsenal-grid li {
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+}
+
 .rb-root {
   position: relative;
   isolation: isolate;

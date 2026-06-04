@@ -825,7 +825,7 @@ function App() {
             <div className="rb-reveal rb-skills">
               <div className="glass-card p-8 rounded-lg">
                 <div className="text-left mb-8"><h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Technical <span className="text-primary">Arsenal</span></h2><p className="font-body-md text-sm text-on-surface-variant leading-relaxed">Tools and technologies I use to bring ideas to life.</p></div>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 rb-arsenal-grid">
               <div className="glass-card arsenal-card arsenal-card-lang p-5 rounded-lg glow-hover-emerald bg-gradient-to-br from-secondary/10 to-surface-container-low min-w-0 rb-tilt" onMouseMove={tiltMove} onMouseLeave={tiltLeave}>
                 <div className="flex items-center justify-between mb-4"><h3 className="font-headline-md text-xl text-secondary">Languages</h3><span className="material-symbols-outlined text-secondary text-2xl">terminal</span></div>
                 <ul className="space-y-2.5"><li className="flex items-center gap-2.5"><i className="devicon-csharp-plain text-secondary" /><span className="font-body-md text-sm">C# / .NET</span></li><li className="flex items-center gap-2.5"><i className="devicon-php-plain text-secondary" /><span className="font-body-md text-sm">PHP</span></li><li className="flex items-center gap-2.5"><i className="devicon-javascript-plain text-secondary" /><span className="font-body-md text-sm">JavaScript</span></li><li className="flex items-center gap-2.5"><i className="devicon-typescript-plain text-secondary" /><span className="font-body-md text-sm">TypeScript</span></li></ul>
