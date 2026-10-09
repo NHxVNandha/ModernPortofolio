@@ -104,6 +104,103 @@ html,
   border-left-color: #8c909f !important;
 }
 
+.rb-age-profile-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(78, 222, 163, 0.22);
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(78, 222, 163, 0.12), transparent 48%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.rb-home-age-card {
+  max-width: 34rem;
+  animation: rb-age-card-in 0.24s ease both;
+}
+
+.rb-age-toggle {
+  min-height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(78, 222, 163, 0.25);
+  color: #4edea3;
+  background: rgba(78, 222, 163, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.rb-age-toggle:hover,
+.rb-age-toggle.is-active {
+  transform: translateY(-2px);
+  border-color: rgba(78, 222, 163, 0.55);
+  background: rgba(78, 222, 163, 0.14);
+}
+
+.rb-age-toggle .material-symbols-outlined {
+  font-size: 1.15rem;
+}
+
+@keyframes rb-age-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rb-age-profile-icon {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #003824;
+  background: linear-gradient(135deg, #4edea3, #00a572);
+}
+
+.rb-age-profile-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-top: 0.3rem;
+  color: #dee1f7;
+}
+
+.rb-age-profile-main strong {
+  color: #4edea3;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.rb-age-profile-zodiac {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(173, 198, 255, 0.22);
+  color: #adc6ff;
+  background: rgba(173, 198, 255, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+}
+
 @media (max-width: 640px) {
   .rb-profile-panel {
     padding: 0 !important;
@@ -125,6 +222,37 @@ html,
     width: 2.25rem;
     height: 2.25rem;
     margin-bottom: 0.65rem;
+  }
+
+  .rb-age-profile-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.9rem;
+    border-radius: 1.25rem;
+  }
+
+  .rb-home-age-card {
+    max-width: 100%;
+  }
+
+  .rb-age-toggle {
+    min-height: 2.95rem;
+    padding: 0 0.85rem;
+    font-size: 0.7rem;
+  }
+
+  .rb-age-profile-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .rb-age-profile-main strong {
+    font-size: 1.55rem;
+  }
+
+  .rb-age-profile-zodiac {
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 
   .rb-arsenal-panel > div:first-child {

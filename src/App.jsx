@@ -21,6 +21,7 @@ const LINKEDIN_URL = 'https://www.linkedin.com/in/kurnia-hary-trisnandha-a802402
 const INSTAGRAM_URL = 'https://www.instagram.com/kurniahary8'
 const TIKTOK_URL = 'https://www.tiktok.com/@idamankleean'
 const YOUTUBE_URL = 'https://www.youtube.com/@kurniaharytz6654'
+const BIRTH_DATE = '2002-09-12'
 
 const mobileViewByHash = {
   home: 'home',
@@ -230,6 +231,42 @@ const formatRelativeTime = (value) => {
   return 'just now'
 }
 
+const getWesternZodiac = (month, day) => {
+  const signs = [
+    ['Capricorn', 1, 19],
+    ['Aquarius', 2, 18],
+    ['Pisces', 3, 20],
+    ['Aries', 4, 19],
+    ['Taurus', 5, 20],
+    ['Gemini', 6, 20],
+    ['Cancer', 7, 22],
+    ['Leo', 8, 22],
+    ['Virgo', 9, 22],
+    ['Libra', 10, 22],
+    ['Scorpio', 11, 21],
+    ['Sagittarius', 12, 21],
+  ]
+
+  return signs.find(([, signMonth, endDay]) => month === signMonth && day <= endDay)?.[0] || signs[month - 2]?.[0] || 'Capricorn'
+}
+
+const getAgeProfile = (birthDateValue) => {
+  const today = new Date()
+  const birthDate = new Date(`${birthDateValue}T00:00:00`)
+  const birthMonth = birthDate.getMonth()
+  const birthDay = birthDate.getDate()
+  const hasBirthdayPassed = today.getMonth() > birthMonth || (today.getMonth() === birthMonth && today.getDate() >= birthDay)
+  const nextBirthdayYear = hasBirthdayPassed ? today.getFullYear() + 1 : today.getFullYear()
+  const nextBirthday = new Date(nextBirthdayYear, birthMonth, birthDay)
+  const daysToBirthday = Math.ceil((nextBirthday.getTime() - new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime()) / 86400000)
+
+  return {
+    age: today.getFullYear() - birthDate.getFullYear() - (hasBirthdayPassed ? 0 : 1),
+    daysToBirthday,
+    zodiac: getWesternZodiac(birthMonth + 1, birthDay),
+  }
+}
+
 const getActivityLabel = (event) => {
   const repoName = event.repo?.name?.split('/').pop() || 'repository'
 
@@ -264,6 +301,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [activeMobileView, setActiveMobileView] = useState('home')
   const [isContactVisible, setIsContactVisible] = useState(false)
+  const [ageCardOpen, setAgeCardOpen] = useState(false)
   const [selectedStitchSlug, setSelectedStitchSlug] = useState(stitchProjects[0]?.slug || '')
   const [githubRepos, setGithubRepos] = useState([])
   const [githubEvents, setGithubEvents] = useState([])
@@ -291,6 +329,7 @@ function App() {
   const [privateSummaryLoading, setPrivateSummaryLoading] = useState(true)
   const [selectedContributionYear, setSelectedContributionYear] = useState(new Date().getFullYear())
   const [snakeAvailable, setSnakeAvailable] = useState(true)
+  const ageProfile = useMemo(() => getAgeProfile(BIRTH_DATE), [])
   const contactBorderRef = useRef(null)
   const homeTechs = [
     { label: 'C#', icon: 'devicon-csharp-plain text-primary icon-glow-blue', border: 'group-hover:border-primary' },
@@ -767,7 +806,28 @@ function App() {
               <div className="flex flex-wrap justify-center sm:justify-start gap-3 md:gap-4 pt-2 md:pt-4 rb-home-actions">
                 <a className="px-8 py-4 bg-primary text-on-primary rounded-full font-bold glow-hover-blue transition-all rb-magnetic" onMouseMove={magneticMove} onMouseLeave={magneticLeave} href="#projects">View Portfolio</a>
                 <a className="px-8 py-4 border border-glass-stroke backdrop-blur-md rounded-full font-bold hover:bg-white/5 transition-all rb-magnetic" onMouseMove={magneticMove} onMouseLeave={magneticLeave} href="#contact">Contact Me</a>
+                <button
+                  type="button"
+                  className={`rb-age-toggle ${ageCardOpen ? 'is-active' : ''}`}
+                  onClick={() => setAgeCardOpen((current) => !current)}
+                  aria-expanded={ageCardOpen}
+                  aria-controls="home-age-profile"
+                >
+                  <span className="material-symbols-outlined">cake</span>
+                  <span>Age</span>
+                </button>
               </div>
+              {ageCardOpen ? (
+                <div id="home-age-profile" className="rb-age-profile-card rb-home-age-card">
+                  <div className="rb-age-profile-icon"><span className="material-symbols-outlined">cake</span></div>
+                  <div>
+                    <p className="font-label-code text-xs uppercase tracking-[0.18em] text-secondary">Age Profile</p>
+                    <div className="rb-age-profile-main"><strong>{ageProfile.age}</strong><span>Years Old</span></div>
+                    <p className="text-on-surface-variant text-xs leading-relaxed">{ageProfile.daysToBirthday === 0 ? 'Birthday is today' : `${ageProfile.daysToBirthday} days to next birthday`}</p>
+                  </div>
+                  <span className="rb-age-profile-zodiac">{ageProfile.zodiac}</span>
+                </div>
+              ) : null}
 
             </div>
               <div className="md:pt-2">
