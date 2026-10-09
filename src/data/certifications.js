@@ -1,0 +1,43 @@
+// Each PDF lives at public/certificates/cert-XX.pdf; source filenames are mapped
+// in scripts/prepare-certificates.py. Dates and claims follow the actual documents.
+const certificates = [
+  ['Lab: Troubleshoot Your Code Using IBM Bob', 'IBM SkillsBuild', '22 Juli 2026', 'AI & Otomasi', 'Penyelesaian lab', 'Menyelesaikan lab penggunaan IBM Bob untuk membantu menelusuri dan memperbaiki masalah kode. Durasi belajar 30 menit.'],
+  ['Build an AI Agent (Badge)', 'IBM SkillsBuild', '24 Juli 2026', 'AI & Otomasi', 'Lencana digital', 'Lencana IBM SkillsBuild untuk pencapaian pembelajaran bertema pembangunan agen kecerdasan buatan.'],
+  ['Introduction to Artificial Intelligence', 'IBM SkillsBuild', '23 Mei 2026', 'AI & Otomasi', 'Penyelesaian kursus', 'Menyelesaikan materi pengantar kecerdasan buatan selama 1 jam 15 menit. ID kursus ALM-COURSE_4058918.'],
+  ['CSS (Basic)', 'HackerRank', '29 November 2025', 'Pemrograman', 'Lulus uji keterampilan', 'Lulus tes sertifikasi keterampilan CSS tingkat dasar di HackerRank.'],
+  ['Webinar Etika AI Generatif', 'Politeknik Elektronika Negeri Surabaya', '28 November 2025', 'AI & Otomasi', 'Peserta webinar', 'Berpartisipasi dalam webinar daring mengenai etika penggunaan kecerdasan buatan generatif.'],
+  ['IT - AI Agent for Programming', 'IBM SkillsBuild / Hacktiv8 Indonesia', '28 Juli 2026', 'AI & Otomasi', 'Pelatihan dan proyek akhir', 'Menyelesaikan program IBM SkillsBuild University Education dan menyerahkan proyek akhir. Pelatihan berlangsung 25–28 Juli 2026 selama 9 jam.'],
+  ['Cracking the ATS with AI Analysis', 'Kementerian Ketenagakerjaan RI', '31 Juli 2026', 'Karier & Soft Skills', 'Peserta webinar', 'Mengikuti penyuluhan jabatan tentang membedah dan memperbaiki CV berdasarkan analisis AI pada sistem penyaring lamaran (ATS). Durasi 1 jam pelajaran.'],
+  ['Etika AI & Critical Thinking', 'Kementerian Ketenagakerjaan RI', '7 Agustus 2026', 'AI & Otomasi', 'Peserta webinar', 'Mengikuti webinar “Menjadi Pekerja yang Unik dan Tidak Tergantikan oleh Mesin”, membahas etika AI dan berpikir kritis. Durasi 1 jam pelajaran.'],
+  ['Soft Skills Professional di Dunia Kerja Remote', 'Politeknik Elektronika Negeri Surabaya', '27 November 2025', 'Karier & Soft Skills', 'Peserta webinar', 'Berpartisipasi dalam webinar tentang keterampilan profesional untuk bekerja jarak jauh.'],
+  ['Intelligent by Design: Build an AI Agent', 'IBM SkillsBuild', '24 Juli 2026', 'AI & Otomasi', 'Penyelesaian kursus', 'Menyelesaikan pembelajaran pembangunan agen AI selama 3 jam 30 menit. ID kursus ALM-COURSE_3946359.'],
+  ['From Linkupcareer.id to Big Company', 'Linkupcareer.id', '18 Juli 2026', 'Karier & Soft Skills', 'Peserta webinar', 'Berpartisipasi dalam webinar “Bukan Sekedar Linkup, Tapi Level Up!” mengenai pengembangan jejaring dan karier.'],
+  ['Masa Depan Manusia di Era AI: Ancaman atau Kesempatan?', 'Politeknik Elektronika Negeri Surabaya', '4 Desember 2025', 'AI & Otomasi', 'Tim riset', 'Berperan sebagai tim riset dalam webinar yang diselenggarakan mahasiswa D3 Pendidikan Jarak Jauh Teknik Informatika PENS.'],
+  ['Demo Penerapan AI: ChatGPT, Copilot, dan Tools Otomatis', 'Politeknik Elektronika Negeri Surabaya', '6 November 2025', 'AI & Otomasi', 'Peserta webinar', 'Mengikuti demonstrasi penerapan alat kecerdasan buatan seperti ChatGPT, Copilot, dan alat otomatis lainnya.'],
+  ['Advanced Social Media & Digital Networking', 'Kementerian Ketenagakerjaan RI', '17 Juli 2026', 'Karier & Soft Skills', 'Peserta webinar', 'Mengikuti webinar tentang penggunaan media sosial dan jejaring digital untuk menjangkau peluang kerja tersembunyi (hidden job market). Durasi 1 jam pelajaran.'],
+  ['Work In Tech Soft Skills Training', 'QED Research Consulting / Yayasan Plan International Indonesia', 'September–November 2022', 'Karier & Soft Skills', 'Penyelesaian pelatihan', 'Menyelesaikan 12 jam pelatihan kesetaraan gender, komunikasi, public speaking, personal branding, CV, portofolio, dan wawancara kerja. Nilai keseluruhan 82.'],
+  ['Manajemen Keamanan Informasi Sektor Kesehatan', 'Badan Siber dan Sandi Negara (BSSN)', '28–30 Juli 2026', 'Keamanan Siber', 'Peserta workshop', 'Berpartisipasi dalam asistensi dan workshop manajemen keamanan informasi untuk sektor kesehatan.'],
+  ['Introduction to Large Language Models', 'IBM SkillsBuild', '22 Juli 2026', 'AI & Otomasi', 'Penyelesaian kursus', 'Menyelesaikan materi pengantar Large Language Models (LLM) selama 1 jam 30 menit. ID kursus ALM-COURSE_4058915.'],
+  ['The Trends of Secure AI Applications', 'BINUS University', '25 Juli 2026', 'Keamanan Siber', 'Peserta talkshow', 'Mengikuti talkshow “The Trends of Secure AI Applications from the Software Industry Perspective” mengenai tren keamanan aplikasi AI.'],
+  ['Digital Marketing: Kursus dan Sertifikasi Kompetensi', 'LKP Fitri Al-Baasitu / LSP Teknologi Digital atas nama BNSP', 'Januari 2022', 'Pemasaran Digital', 'Kursus dan sertifikat kompetensi', 'Berkas tiga halaman memuat kursus Digital Marketing berpredikat Memuaskan serta sertifikat kompetensi Pemasaran Digital tertanggal 4 Januari 2022, berlaku tiga tahun. Materi mencakup riset pasar, media sosial, periklanan, konten, dan penjualan.'],
+  ['Praktik Kerja Lapangan - Teknik Komputer dan Jaringan', 'CV Elsa Mandiri Abadi / Elsa Computer', 'November 2019–Maret 2020', 'Jaringan & Dukungan TI', 'Praktik kerja lapangan', 'Melaksanakan PKL dengan hasil Baik/Kompeten: diagnosis dan perawatan PC serta printer, dan instalasi jaringan lokal (LAN).'],
+  ['Merancang dan Mengelola Jaringan Komputer', 'Cybers Academy / Prakerja', '4 Agustus 2023', 'Jaringan & Dukungan TI', 'Penyelesaian pelatihan', 'Menyelesaikan pelatihan 15 jam untuk spesialis teknisi jaringan dan sistem komputer. Lampiran memuat kebutuhan pengguna, perawatan, instalasi OS dan aplikasi, serta pencadangan data.'],
+  ['LKS SMK - IT Network System Administration', 'MKKS SMK Wilayah Kerja 4 Jawa Timur', '29–31 Maret 2021', 'Jaringan & Dukungan TI', 'Peserta lomba', 'Menjadi peserta Lomba Kompetensi Siswa bidang IT Network System Administration mewakili SMKN 5 Madiun.'],
+  ['Pengenalan Generative AI & Aplikasinya dalam Dunia Kerja TI', 'Politeknik Elektronika Negeri Surabaya', '30 Oktober 2025', 'AI & Otomasi', 'Peserta webinar', 'Mengikuti webinar tentang penerapan AI generatif di bidang kerja TI dan pemahaman teknologi yang inovatif serta beretika.'],
+  ['Belajar Dasar Pemrograman JavaScript', 'Dicoding Indonesia', '20 Oktober 2024', 'Pemrograman', 'Kelulusan kursus', 'Lulus kelas 46 jam tentang sintaks JavaScript, fungsi, struktur data, modul, OOP, functional programming, asynchronous programming, dan kualitas kode. Sertifikat berlaku hingga 20 Oktober 2027.'],
+  ['Dasar-Dasar Dukungan Teknis', 'Google / Coursera', '9 November 2022', 'Jaringan & Dukungan TI', 'Penyelesaian kursus', 'Menyelesaikan kursus daring nonkredit pengantar dukungan teknis yang diselenggarakan Google melalui Coursera.'],
+  ['SQL (Basic)', 'HackerRank', '29 November 2025', 'Pemrograman', 'Lulus uji keterampilan', 'Lulus tes sertifikasi keterampilan SQL tingkat dasar di HackerRank.'],
+  ['Membangun Portofolio Digital: GitHub, LinkedIn, Website Pribadi', 'Politeknik Elektronika Negeri Surabaya', '20 November 2025', 'Karier & Soft Skills', 'Peserta webinar', 'Mengikuti webinar mahasiswa D3 PJJ Teknik Informatika PENS mengenai pembangunan portofolio profesional di GitHub, LinkedIn, dan website pribadi.'],
+]
+
+export default certificates.map(([title, issuer, issued, category, type, description], index) => ({
+  id: `cert-${String(index + 1).padStart(2, '0')}`,
+  title,
+  issuer,
+  issued,
+  category,
+  type,
+  description,
+  pdf: `/certificates/cert-${String(index + 1).padStart(2, '0')}.pdf`,
+  thumbnail: `/certificates/cert-${String(index + 1).padStart(2, '0')}.jpg`,
+}))

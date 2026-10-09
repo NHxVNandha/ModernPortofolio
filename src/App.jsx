@@ -6,6 +6,7 @@ import Dock from './components/Dock.jsx'
 import GitHubCommitChart from './components/GitHubCommitChart.jsx'
 import HomeMusicPlayer from './components/HomeMusicPlayer.jsx'
 import LiveSiteMetrics from './components/LiveSiteMetrics.jsx'
+import CertificateGallery from './components/CertificateGallery.jsx'
 import stitchProjects from './data/stitchProjects.json'
 
 const Lanyard = lazy(() => import('./components/Lanyard.jsx'))
@@ -104,99 +105,6 @@ const footerQuickLinks = [
   ...footerNavLinks,
   ...socialLinks.filter((item) => footerSocialLabels.has(item.label)),
   ...contactLinks.filter((item) => footerContactLabels.has(item.label)),
-]
-
-const certifications = [
-  {
-    title: 'Introduction to Artificial Intelligence',
-    issuer: 'Pijak in collaboration with IBM SkillsBuild',
-    issued: 'Mei 2026',
-    credentialId: 'ALM-COURSE_4058918',
-    icon: 'psychology',
-    toneClass: 'text-primary',
-    iconBgClass: 'rb-cert-icon-primary',
-    dotClass: 'rb-cert-dot-primary',
-  },
-  {
-    title: 'CSS (Basic)',
-    issuer: 'HackerRank',
-    issued: 'Nov 2025',
-    credentialId: '613722766A22',
-    devicon: 'devicon-css3-plain',
-    toneClass: 'text-primary',
-    iconBgClass: 'rb-cert-icon-primary',
-    dotClass: 'rb-cert-dot-primary',
-  },
-  {
-    title: 'SQL (Basic)',
-    issuer: 'HackerRank',
-    issued: 'Nov 2025',
-    credentialId: 'ID022DDDAD4DEO',
-    icon: 'database',
-    toneClass: 'text-tertiary',
-    iconBgClass: 'rb-cert-icon-tertiary',
-    dotClass: 'rb-cert-dot-tertiary',
-  },
-  {
-    title: 'Belajar Dasar Pemrograman JavaScript',
-    issuer: 'Dicoding Indonesia',
-    issued: 'Okt 2024',
-    expires: 'Okt 2027',
-    credentialId: '1OP84WYMQZQK',
-    devicon: 'devicon-javascript-plain',
-    toneClass: 'text-tertiary',
-    iconBgClass: 'rb-cert-icon-tertiary',
-    dotClass: 'rb-cert-dot-tertiary',
-  },
-  {
-    title: 'Merancang dan Mengelola Jaringan Komputer',
-    issuer: 'Cybers Academy',
-    issued: 'Agu 2023',
-    credentialId: 'BL2318LKCN8GINV/45142/16',
-    icon: 'hub',
-    toneClass: 'text-secondary',
-    iconBgClass: 'rb-cert-icon-secondary',
-    dotClass: 'rb-cert-dot-secondary',
-  },
-  {
-    title: 'Dasar-Dasar Dukungan Teknis',
-    issuer: 'Coursera',
-    issued: 'Okt 2022',
-    credentialId: 'ATNQ4DN4FC4K',
-    icon: 'support_agent',
-    toneClass: 'text-primary',
-    iconBgClass: 'rb-cert-icon-primary',
-    dotClass: 'rb-cert-dot-primary',
-  },
-  {
-    title: 'Work In Tech Soft Skills Training',
-    issuer: 'QED Research Consulting',
-    issued: 'Sep 2022',
-    icon: 'groups',
-    toneClass: 'text-secondary',
-    iconBgClass: 'rb-cert-icon-secondary',
-    dotClass: 'rb-cert-dot-secondary',
-  },
-  {
-    title: 'Digital Marketing Certified',
-    issuer: 'Badan Nasional Sertifikasi Profesi (BNSP)',
-    issued: 'Jan 2022',
-    expires: 'Jan 2025',
-    credentialId: '62090 2431 0 0016041 2022',
-    icon: 'verified',
-    toneClass: 'text-secondary',
-    iconBgClass: 'rb-cert-icon-secondary',
-    dotClass: 'rb-cert-dot-secondary',
-  },
-  {
-    title: 'IT Network System Administration',
-    issuer: 'LKS SMK',
-    issued: 'Mar 2021',
-    icon: 'router',
-    toneClass: 'text-tertiary',
-    iconBgClass: 'rb-cert-icon-tertiary',
-    dotClass: 'rb-cert-dot-tertiary',
-  },
 ]
 
 const formatCompactDate = (value) => {
@@ -1037,34 +945,7 @@ function App() {
                   </div>
                 </div>
 
-                <div>
-                  <div className="mb-12">
-                    <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Certifications</h2>
-                    <div className="w-20 h-1 bg-secondary rounded-full" />
-                    <p className="mt-6 text-on-surface-variant font-body-md text-sm text-justify leading-relaxed">Licenses and certifications that validate practical capability across artificial intelligence, web fundamentals, database systems, technical support, networking, digital marketing, and professional work readiness.</p>
-                  </div>
-                  <div className="rb-cert-timeline">
-                    {certifications.map((cert) => (
-                      <div key={`${cert.title}-${cert.issued}`} className="rb-cert-item">
-                        <span className={`rb-cert-dot ${cert.dotClass}`} aria-hidden="true" />
-                        <article className="rb-cert-card rb-target-card rb-target-cert">
-                          <div className={`rb-cert-icon ${cert.iconBgClass}`}>
-                            {cert.devicon ? <i className={`${cert.devicon} ${cert.toneClass}`} /> : <span className={`material-symbols-outlined ${cert.toneClass}`}>{cert.icon}</span>}
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="rb-cert-title">{cert.title}</h4>
-                            <p className="rb-cert-issuer">{cert.issuer}</p>
-                            <div className="rb-cert-meta">
-                              <span>Diterbitkan {cert.issued}</span>
-                              {cert.expires ? <span>Berakhir {cert.expires}</span> : null}
-                            </div>
-                            {cert.credentialId ? <p className="rb-cert-id">ID Kredensial <span>{cert.credentialId}</span></p> : null}
-                          </div>
-                        </article>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <CertificateGallery />
               </div>
             </div>
           </div>

@@ -1,0 +1,42 @@
+.rb-certificate-gallery { min-width: 0; }
+.rb-cert-filters { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 0.9rem; }
+.rb-cert-filter { border: 1px solid rgba(173,198,255,.22); border-radius: 999px; padding: .5rem .8rem; background: rgba(173,198,255,.06); color: #dee1f7; font-size: .77rem; transition: background .2s, border-color .2s, transform .2s; }
+.rb-cert-filter:hover, .rb-cert-filter:focus-visible { border-color: #4edea3; transform: translateY(-2px); }
+.rb-cert-filter.is-selected { background: #4edea3; color: #003824; border-color: #4edea3; font-weight: 700; }
+.rb-cert-filter span { margin-left: .3rem; opacity: .75; }
+.rb-cert-result { color: #aeb4ca; font-size: .76rem; margin-bottom: 1.25rem; }
+.rb-cert-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.rb-cert-grid .rb-cert-card { display: flex; flex-direction: column; gap: .65rem; min-width: 0; padding: 1.2rem; }
+.rb-cert-thumbnail { position: relative; height: 125px; overflow: hidden; border-radius: .75rem; background: #253044; }
+.rb-cert-thumbnail img { width: 100%; height: 100%; object-fit: cover; object-position: center 23%; transition: transform .35s, filter .35s; }
+.rb-cert-card:hover .rb-cert-thumbnail img, .rb-cert-card:focus-within .rb-cert-thumbnail img { transform: scale(1.07); filter: brightness(.7); }
+.rb-cert-thumbnail-hint { position: absolute; left: .7rem; bottom: .55rem; padding: .2rem .55rem; border-radius: 999px; background: rgba(9,14,28,.83); color: #dee1f7; font-size: .7rem; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .2s; }
+.rb-cert-card:hover .rb-cert-thumbnail-hint, .rb-cert-card:focus-within .rb-cert-thumbnail-hint { opacity: 1; transform: none; }
+.rb-cert-card-top, .rb-cert-card-bottom, .rb-cert-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+.rb-cert-card-top, .rb-cert-card-bottom { justify-content: space-between; }
+.rb-cert-grid .rb-cert-title { line-height: 1.4; }
+.rb-cert-grid .rb-cert-issuer { margin: 0; }
+.rb-cert-category { border-radius: 999px; padding: .3rem .6rem; color: #4edea3; background: rgba(78,222,163,.12); font-size: .69rem; font-weight: 700; }
+.rb-cert-date, .rb-cert-type { font-size: .7rem; color: #aeb4ca; }
+.rb-cert-description { color: #c2c6d6; font-size: .81rem; line-height: 1.65; }
+.rb-cert-card-bottom { margin-top: auto; padding-top: .7rem; border-top: 1px solid rgba(173,198,255,.12); }
+.rb-cert-actions button, .rb-cert-actions a { display: inline-flex; align-items: center; gap: .2rem; padding: .38rem .55rem; border-radius: .6rem; border: 1px solid rgba(173,198,255,.25); color: #adc6ff; background: rgba(173,198,255,.08); font-size: .75rem; text-decoration: none; cursor: pointer; }
+.rb-cert-actions button:hover, .rb-cert-actions a:hover, .rb-cert-actions button:focus-visible, .rb-cert-actions a:focus-visible { border-color: #4edea3; color: #4edea3; }
+.rb-cert-actions .material-symbols-outlined { font-size: 1rem; }
+.rb-cert-dialog { width: min(95vw, 1050px); max-width: none; max-height: 94vh; padding: 0; border: 1px solid rgba(173,198,255,.35); border-radius: 1.2rem; color: #dee1f7; background: #161b2b; box-shadow: 0 30px 100px rgba(0,0,0,.7); }
+.rb-cert-dialog::backdrop { background: rgba(5,8,16,.84); backdrop-filter: blur(7px); }
+.rb-cert-dialog-content { display: flex; flex-direction: column; max-height: 94vh; }
+.rb-cert-dialog-header { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; }
+.rb-cert-dialog-header h3 { font-size: 1.2rem; font-weight: 700; margin: .55rem 0 .2rem; }
+.rb-cert-dialog-header p { color: #aeb4ca; font-size: .8rem; }
+.rb-cert-close { align-self: flex-start; padding: .35rem; border-radius: .5rem; color: #dee1f7; }
+.rb-cert-close:hover, .rb-cert-close:focus-visible { background: rgba(173,198,255,.15); }
+.rb-cert-document { display: block; width: 100%; height: min(67vh, 740px); background: white; border: 0; }
+.rb-cert-dialog-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .7rem; padding: .85rem 1.25rem; }
+.rb-cert-dialog-footer p { flex: 1 1 19rem; font-size: .75rem; line-height: 1.5; color: #c2c6d6; }
+@media (max-width: 780px) {
+  .rb-cert-grid { grid-template-columns: 1fr; }
+  .rb-cert-dialog { width: 100vw; max-height: 100dvh; border-radius: 0; }
+  .rb-cert-dialog-content { max-height: 100dvh; }
+  .rb-cert-document { height: 55dvh; }
+}
