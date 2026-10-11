@@ -822,8 +822,8 @@ function App() {
         </section>
 
         <section className={mobileViewClass('journey', 'py-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto rb-reveal rb-experience')} id="experience">
-          <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div className="order-2">
+          <div className="grid md:grid-cols-12 gap-10 items-start">
+            <div className="order-2 md:col-span-6">
               <div className="mb-12">
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Work <span className="text-primary">Journey</span></h2>
                 <div className="w-20 h-1 bg-primary rounded-full" />
@@ -905,7 +905,7 @@ function App() {
             </div>
             </div>
 
-            <div className="rb-reveal rb-education order-1 scroll-mt-24" id="education">
+            <div className="rb-reveal rb-education order-1 md:col-span-6 scroll-mt-24" id="education">
               <div className="mb-12">
                 <h2 className="font-headline-lg text-headline-lg mb-4 rb-title rb-threads">Education</h2>
                 <div className="w-20 h-1 bg-secondary rounded-full" />
@@ -947,8 +947,10 @@ function App() {
                   </div>
                 </div>
 
-                <CertificateGallery />
               </div>
+            </div>
+            <div className="order-3 md:col-span-12">
+              <CertificateGallery />
             </div>
           </div>
         </section>
