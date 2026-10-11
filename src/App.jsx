@@ -364,7 +364,9 @@ function App() {
           }
         })
       },
-      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' },
+      // A tall section (e.g. the certificate gallery) cannot reach a 16% intersection
+      // on a short viewport; reveal it as soon as its leading edge enters the screen.
+      { threshold: 0, rootMargin: '0px 0px -8% 0px' },
     )
 
     nodes.forEach((node) => observer.observe(node))
